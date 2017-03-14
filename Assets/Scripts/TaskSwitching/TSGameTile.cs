@@ -83,12 +83,16 @@ public class TSGameTile : TSGameObject
 	{
 		// Cleanup to ensure all icons are hidden and no extra coroutines are running
 		StopAllCoroutines();
-		successIcon.SetActive(false);
-		failureIcon.SetActive(false);
-
+		ToggleAllIcons(visible:false);
 		GameObject icon = successfulPlacement ? successIcon : failureIcon;
 		icon.SetActive(true);
 		StartCoroutine(showIconRoutine(icon, timeShowIcon));
+	}
+
+	public void ToggleAllIcons(bool visible)
+	{
+		successIcon.SetActive(visible);
+		failureIcon.SetActive(visible);
 	}
 
 	IEnumerator showIconRoutine(GameObject icon, float time)

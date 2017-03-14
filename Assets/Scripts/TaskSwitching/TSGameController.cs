@@ -102,6 +102,11 @@ public class TSGameController : SingletonController<TSGameController>
 		this.boardTiles = GetComponentsInChildren<TSGameTile>();
 		initBoardTiles(boardTiles);
 		StartSpawning();
+	}
+
+	protected override void fetchReferences()
+	{
+		base.fetchReferences();
 		leftButton.SetText(leftKey.ToString());
 		rightButton.SetText(rightKey.ToString());
 	}
@@ -300,7 +305,16 @@ public class TSGameController : SingletonController<TSGameController>
 			yield return new WaitForSeconds(spawnDelay);
 			rightButton.SetActive();
 			leftButton.SetActive();
+			toggleAllTileIcons(visible:false);
 			spawnPiece(chooseLetter(), chooseNumber());
+		}
+	}
+
+	void toggleAllTileIcons(bool visible)
+	{
+		foreach(TSGameTile tile in boardTiles)
+		{
+			tile.ToggleAllIcons(visible);
 		}
 	}
 
