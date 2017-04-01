@@ -11,6 +11,8 @@ using System.Collections.Generic;
 
 public class TSGameController : SingletonController<TSGameController>
 {
+    const string CURRENT_TASK_FORMAT = "Task {0}";
+
 	[Header("Game Logic")]
 
 	[SerializeField]
@@ -68,6 +70,7 @@ public class TSGameController : SingletonController<TSGameController>
 	TSGamePiece[] boardPieces;
 	TSGameTile[] boardTiles;
 	TSGameTile activeTile;
+    TSDataController data;
 
 	bool hasActiveTile
 	{
@@ -109,7 +112,15 @@ public class TSGameController : SingletonController<TSGameController>
 		base.fetchReferences();
 		leftButton.SetText(leftKey.ToString());
 		rightButton.SetText(rightKey.ToString());
+        data = TSDataController.Instance;
+        data.SubscribeToGameEnd(handleGameEnd);
 	}
+
+    protected override void cleanupReferences()
+    {
+        base.cleanupReferences();
+        data.UnsubscribeFromGameEnd(handleGameEnd);
+    }
 
 	void initBoardTiles(TSGameTile[] boardTiles)
 	{
@@ -127,6 +138,7 @@ public class TSGameController : SingletonController<TSGameController>
 		{
 			boardPieces[i] = Instantiate(piecePrefab);
 			boardPieces[i].transform.SetParent(boardParent);
+            boardPieces[i].transform.localScale = Vector3.one;
 			boardPieces[i].Init(index:i);
 			boardPieces[i].ToggleVisible(startActive);
 		}
@@ -158,7 +170,15 @@ public class TSGameController : SingletonController<TSGameController>
 
 	TSGamePiece choosePieceToSpawn()
 	{
-		return boardPieces[Random.Range(0, boardPieces.Length)];
+        switch(data.CurrentMode)
+        {
+            case TSMode.LeterRow:
+                return boardPieces[Random.Range(0, boardPieces.Length / 2)];
+            case TSMode.NumberRow:
+                return boardPieces[Random.Range(boardPieces.Length / 2, boardPieces.Length)];
+            default:
+                return boardPieces[Random.Range(0, boardPieces.Length)];
+        }
 	}
 		
 	char chooseLetter()
@@ -254,6 +274,11 @@ public class TSGameController : SingletonController<TSGameController>
 
 	}
 
+    void handleGameEnd()
+    {
+        StopCoroutine(spawningRoutine);
+    }
+
 	TSGameTile getTargetTile(KeyCode key, TSGameTile occupiedTile)
 	{
 		TSMatchCondition targetCondition = getMatchCondition(key, occupiedTile.GetMatchType);
@@ -307,6 +332,7 @@ public class TSGameController : SingletonController<TSGameController>
 			leftButton.SetActive();
 			toggleAllTileIcons(visible:false);
 			spawnPiece(chooseLetter(), chooseNumber());
+            data.NextTask();
 		}
 	}
 
