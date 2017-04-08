@@ -34,6 +34,14 @@ public class TSGameController : SingletonController<TSGameController>
 		}
 	}
 
+    bool hasCurrentTask
+    {
+        get
+        {
+            return currentTask != null;
+        }
+    }
+
 	[SerializeField]
 	int[] validEvenNumbers;
 	[SerializeField]
@@ -71,6 +79,9 @@ public class TSGameController : SingletonController<TSGameController>
 	TSGameTile[] boardTiles;
 	TSGameTile activeTile;
     TSDataController data;
+    TSTaskDescriptor currentTask;
+    double responseTime = 0;
+    double taskTime = 0;
 
 	bool hasActiveTile
 	{
@@ -131,6 +142,16 @@ public class TSGameController : SingletonController<TSGameController>
 		}
 	}
 
+    void recordReponseTime()        
+    {
+        this.responseTime = data.GetEventTime(getTaskKey());
+    }
+
+    void recordTaskTime()
+    {
+        this.taskTime = data.GetEventTime(getTaskKey());
+    }
+
 	TSGamePiece[] spawnPieces(bool startActive)
 	{
 		TSGamePiece[] boardPieces = new TSGamePiece[maxPiecesOnBoard];
@@ -165,8 +186,46 @@ public class TSGameController : SingletonController<TSGameController>
 		this.activeTile = boardTiles[pieceIndex];
 		piece.SetPiece(pieceLetter, pieceNumber);
 		activeTile.SetPiece(piece);
+        this.currentTask = trackTask(pieceLetter, pieceNumber, pieceIndex);
 		return piece;
 	}
+
+    TSTaskDescriptor trackTask(char pieceLetter, int pieceNumber, int stimulusPosition)
+    {
+        TSTaskDescriptor task = new TSTaskDescriptor();
+        task.BlockName = data.CurrentMode.ToString();
+        task.StimulusPosition = stimulusPosition;
+        task.TaskType = (int) boardTiles[stimulusPosition].GetMatchType + 1;
+        task.LetterStimulusIndex = ArrayUtil.IndexOf(validLetters, pieceLetter);
+        task.NumberStimulus = pieceNumber;
+        task.TypeOfBlock = ((int) data.CurrentMode) + 1;
+        TSTaskType taskType =  data.IsTaskSwitch ? TSTaskType.TaskSwitch : TSTaskType.TaskRepeat;
+        task.IsNewTaskSwitch = (int) taskType;
+        data.StartTimer(getTaskKey());
+        return task;
+    }
+
+    string getTaskKey()
+    {
+        return string.Format(CURRENT_TASK_FORMAT, data.CurrentTaskIndex);
+    }
+
+    void sendTask(TSTaskDescriptor task, TSResponseStatus response, double responseTime, double taskTime)
+    {
+        task.ResponseStatus = (int) response;
+        task.ResponseTime = responseTime;
+        task.TotalTaskTime = taskTime;
+        data.CompleteTask(task);
+        resetTaskData();
+        data.NextTask();
+    }
+
+    void resetTaskData()
+    {
+        this.currentTask = null;
+        this.responseTime = 0;
+        this.taskTime = 0;
+    }
 
 	TSGamePiece choosePieceToSpawn()
 	{
@@ -201,10 +260,10 @@ public class TSGameController : SingletonController<TSGameController>
 
 	void Update()
 	{
+        bool successfulPlacement = false;
 		if(hasActiveTile)
 		{
 			bool keyPressed = false;
-			bool successfulPlacement = false;
 			TSGameTile targetTile = null;
 			if(Input.GetKeyDown(leftKey))
 			{
@@ -221,6 +280,10 @@ public class TSGameController : SingletonController<TSGameController>
 			if(keyPressed && targetTile != null)
 			{
 				targetTile.TimedShowIcon(successfulPlacement);
+                if(hasCurrentTask)
+                {
+                    recordReponseTime();
+                }
 			}
 		}
 		bool buttonWasUp = false;
@@ -238,6 +301,15 @@ public class TSGameController : SingletonController<TSGameController>
 		{
 			rightButton.SetInactive();
 			leftButton.SetInactive();
+            if(hasCurrentTask) 
+            {
+                recordTaskTime();
+                sendTask(currentTask,
+                    successfulPlacement ? TSResponseStatus.Correct : TSResponseStatus.Error,
+                    responseTime,
+                    taskTime);
+
+            }
 		}
 	}
 
@@ -328,11 +400,14 @@ public class TSGameController : SingletonController<TSGameController>
 		while(this.spawningActive)
 		{
 			yield return new WaitForSeconds(spawnDelay);
-			rightButton.SetActive();
+            if(hasCurrentTask)
+            {
+                sendTask(currentTask, TSResponseStatus.TooSlow, 0, 0);
+            }
+            rightButton.SetActive();
 			leftButton.SetActive();
 			toggleAllTileIcons(visible:false);
 			spawnPiece(chooseLetter(), chooseNumber());
-            data.NextTask();
 		}
 	}
 
@@ -364,18 +439,4 @@ public class TSGameController : SingletonController<TSGameController>
 		return ArrayUtil.Contains(this.validOddNumbers, number);
 	}
 
-}
-
-public enum TSMatchCondition
-{
-	EvenNumber,
-	OddNumber,
-	VowelLetter,
-	ConsonantLetter,
-}
-
-public enum TSMatchType
-{
-	Number,
-	Letter,
 }

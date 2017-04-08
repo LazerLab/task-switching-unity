@@ -20,6 +20,20 @@ public class TSDataController : SingletonController<TSDataController>
         }
     }
 
+    public bool IsTaskSwitch
+    {
+        get;
+        private set;
+    }
+
+    public int CurrentTaskIndex
+    {
+        get
+        {
+            return game.CurrentTaskIndex;
+        }
+    }
+
     int currentModeIndex
     {
         get
@@ -140,7 +154,12 @@ public class TSDataController : SingletonController<TSDataController>
             else
             {
                 NextMode();
+                IsTaskSwitch = true;
             }
+        }
+        else
+        {
+            IsTaskSwitch = false;
         }
         game.CurrentTaskIndex++;
     }
@@ -161,13 +180,13 @@ public struct TSGameState
 }
 
 [System.Serializable]
-public struct TSTaskDescriptor
+public class TSTaskDescriptor
 {
     public string BlockName;
     public int StimulusPosition; // 1,2,3,4 (top left, top right, bottom right, bottom left
     public int TaskType; // 1 for letter, 2 for number
     public int LetterStimulusIndex; // index of letter in list
-    public int NumberStimulusIndex; // number value
+    public int NumberStimulus; // number value
     public int TypeOfBlock; // (1=just task 1; 2=just task 2; 0=both tasks mixed)
     public int IsNewTaskSwitch; // 1=task switch , 0=task repeat
     public int ResponseStatus; // (1=correct, 2=error, 3=too slow)
@@ -182,7 +201,7 @@ public struct TSTaskDescriptor
             StimulusPosition,
             TaskType,
             LetterStimulusIndex,
-            NumberStimulusIndex,
+            NumberStimulus,
             TypeOfBlock,
             IsNewTaskSwitch,
             ResponseStatus,
@@ -197,4 +216,31 @@ public enum TSMode
     LeterRow,
     NumberRow,
     MixedRows
+}
+
+public enum TSMatchCondition
+{
+    EvenNumber,
+    OddNumber,
+    VowelLetter,
+    ConsonantLetter,
+}
+
+public enum TSMatchType
+{
+    Letter,
+    Number,
+}
+
+public enum TSTaskType
+{
+    TaskSwitch = 1,
+    TaskRepeat = 0,
+}
+
+public enum TSResponseStatus
+{
+    Correct = 1,
+    Error = 2,
+    TooSlow = 3,
 }
