@@ -12,6 +12,8 @@ using VSDataCollector;
 
 public class TSDataController : SingletonController<TSDataController> 
 {
+    const string SUBMIT_FUNC = "submit";
+
     public TSMode CurrentMode
     {
         get
@@ -123,6 +125,7 @@ public class TSDataController : SingletonController<TSDataController>
         {
             Debug.Log(currentExperiment.LastRowToString());
         }
+        Application.ExternalCall(SUBMIT_FUNC, currentExperiment.LastRowToString());
     }
 
     public void SubscribeToGameEnd(MonoAction handler)
