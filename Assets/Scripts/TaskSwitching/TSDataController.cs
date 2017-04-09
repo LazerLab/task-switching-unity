@@ -14,7 +14,7 @@ public class TSDataController : SingletonController<TSDataController>
 {
     // Modified func call as a workaround to using the iframe:
     const string SUBMIT_FUNC = "parent.postMessage";
-	const string POST_SOURCE = "https://lazerlab.github.io/task-switching-unity/";
+	const string POST_SOURCE = "https://volunteerscience.com/";
 
     public TSMode CurrentMode
     {
