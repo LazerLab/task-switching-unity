@@ -13,7 +13,7 @@ using VSDataCollector;
 public class TSDataController : SingletonController<TSDataController> 
 {
     // Modified func call as a workaround to using the iframe:
-    const string SUBMIT_FUNC = "vsSubmit";
+    const string SUBMIT_FUNC = "parent.vsSubmit";
 
     public TSMode CurrentMode
     {
