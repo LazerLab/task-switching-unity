@@ -22,9 +22,8 @@ namespace VolunteerScience
 
     public class VariableFetchAction 
     {
-        const string VARIABLES_LOOKUP = "variables";
-        const string SEND_TO_UNITY_FUNC = "SendMessage";
         const string RECEIVE_FUNC = "Receive";
+        const string FETCH_FUNC = "fetch";
 
         Action<object> callback;
         string key;
@@ -56,12 +55,11 @@ namespace VolunteerScience
          */
         string getJSCall(string key, GameObject receiver)
         {
-            return string.Format("{0}('{1}', '{2}', {3}['{4}']);",
-                SEND_TO_UNITY_FUNC,
+            return string.Format("{0}('{1}', '{2}', '{3}');", 
+                FETCH_FUNC,
+                key,
                 receiver.name,
-                RECEIVE_FUNC,
-                VARIABLES_LOOKUP,
-                key);
+                RECEIVE_FUNC);
         }
 
         GameObject createObject()
