@@ -127,7 +127,8 @@ public class TSDataController : SingletonController<TSDataController>
         {
             Debug.Log(currentExperiment.LastRowToString());
         }
-		Application.ExternalCall(SUBMIT_FUNC, currentExperiment.LastRowToString(), POST_SOURCE);
+        string jsMessage = string.Format("{0}('{1}', '*');", SUBMIT_FUNC, currentExperiment.LastRowToString());
+        Application.ExternalEval(jsMessage);
     }
 
     public void SubscribeToGameEnd(MonoAction handler)
