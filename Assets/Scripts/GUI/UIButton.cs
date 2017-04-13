@@ -8,6 +8,14 @@ using UnityEngine;
 
 public class UIButton : UIElement 
 {	
+    public bool IsPressed
+    {
+        get
+        {
+            return this.isPressed;
+        }
+    }
+
 	[SerializeField]
 	Color pressedColor = Color.gray;
 	[SerializeField]

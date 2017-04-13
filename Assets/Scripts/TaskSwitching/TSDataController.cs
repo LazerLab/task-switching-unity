@@ -8,7 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using VSDataCollector;
+using VolunteerScience;
 
 public class TSDataController : SingletonController<TSDataController> 
 {
@@ -70,14 +70,13 @@ public class TSDataController : SingletonController<TSDataController>
     TSGameState game;
     MonoAction onGameEnd;
     DataCollector data;
-    Experiment currentExperiment;
 
     protected override void setReferences()
     {
         base.setReferences();
         game = getNewGame();
         data = DataCollector.Get;
-        currentExperiment = data.TrackExperiment(experimentName);
+        data.TrackExperiment(experimentName);
     }
 
     TSGameState getNewGame()
@@ -92,12 +91,12 @@ public class TSDataController : SingletonController<TSDataController>
 
     public void StartTimer(string key)
     {
-        currentExperiment.TimeEvent(key);
+        data.TimeEvent(key);
     }
 
     public double GetEventTime(string key)
     {
-        return currentExperiment.GetEventTimeSeconds(key);
+        return data.GetEventTimeSeconds(key);
     }
 
     public bool ShouldSwitchMode()
@@ -122,13 +121,12 @@ public class TSDataController : SingletonController<TSDataController>
     public void CompleteTask(TSTaskDescriptor task)
     {
         game.CompletedTasks.Add(task);
-        currentExperiment.AddDataRow(task.GetDataRow());
+        data.AddDataRow(task.GetDataRow());
         if(verboseMode)
         {
-            Debug.Log(currentExperiment.LastRowToString());
+            Debug.Log(data.GetExperiment(experimentName).LastRowToString());
         }
-        string jsMessage = string.Format("{0}('{1}', '*');", SUBMIT_FUNC, currentExperiment.LastRowToString());
-        Application.ExternalEval(jsMessage);
+        data.SubmitLastDataRow();
     }
 
     public void SubscribeToGameEnd(MonoAction handler)
