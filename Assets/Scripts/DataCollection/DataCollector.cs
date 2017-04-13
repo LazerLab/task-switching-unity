@@ -8,11 +8,23 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace VSDataCollector
+namespace VolunteerScience
 {	
 	public class DataCollector : Singleton<DataCollector>
 	{
+        const string SUBMIT_FUNC = "parent.postMessage";
+        const string ACTIVE_EXPERIMENT_NOT_SET = "Active experiment not set";
+
+        bool hasActiveExperiment
+        {
+            get
+            {
+                return activeExperiment != null;
+            }
+        }
+
 		Dictionary<string, Experiment> instances = new Dictionary<string, Experiment>();
+        Experiment activeExperiment;
 
 		public Experiment TrackExperiment(string instanceName)
 		{
@@ -33,6 +45,66 @@ namespace VSDataCollector
 				return TrackExperiment(name);
 			}
 		}
+
+        public void SetActiveExperiment(string name)
+        {
+            this.activeExperiment = GetExperiment(name);
+        }
+
+        public void AddDataRow(params object[] data)
+        {
+            if(hasActiveExperiment)
+            {
+                activeExperiment.AddDataRow(data);
+            }
+            else
+            {
+                Debug.LogError(ACTIVE_EXPERIMENT_NOT_SET);
+            }
+        }
+
+        public void TimeEvent(string eventName)
+        {
+            if(hasActiveExperiment)
+            {
+                activeExperiment.TimeEvent(eventName);
+            }
+            else
+            {
+                Debug.LogError(ACTIVE_EXPERIMENT_NOT_SET);
+            }
+        }
+            
+        public double GetEventTimeSeconds(string eventName)
+        {
+            if(hasActiveExperiment)
+            {
+                return activeExperiment.GetEventTimeSeconds(eventName);
+            }
+            else
+            {
+                Debug.LogError(ACTIVE_EXPERIMENT_NOT_SET);
+                return double.NaN;
+            }
+        }
+
+        public void SubmitLastDataRow()
+        {
+            if(hasActiveExperiment)
+            {
+                submitData(activeExperiment.LastRowToString());
+            }
+            else
+            {
+                Debug.LogError(ACTIVE_EXPERIMENT_NOT_SET);
+            }
+        }
+
+        void submitData(string dataAsString)
+        {
+            string jsMessage = string.Format("{0}('{1}', '*');", SUBMIT_FUNC, dataAsString);
+            Application.ExternalEval(jsMessage);
+        }
 
 	}
 

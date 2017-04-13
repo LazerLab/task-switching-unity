@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace VSDataCollector
+namespace VolunteerScience
 {
 	public class Singleton<T> : MonoBehaviour where T : Component
 	{
