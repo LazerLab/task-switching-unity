@@ -8,10 +8,12 @@ using UnityEngine;
 
 using System.Collections;
 using System.Collections.Generic;
+using VolunteerScience;
 
 public class TSGameController : SingletonController<TSGameController>
 {
     const string CURRENT_TASK_FORMAT = "Task {0}";
+    const string SPAWN_DELAY_KEY = "spawnDelay";
 
 	[Header("Game Logic")]
 
@@ -74,12 +76,18 @@ public class TSGameController : SingletonController<TSGameController>
 	[SerializeField]
 	Transform boardParent;
 
+    [Header("Debugging")]
+    [SerializeField]
+    bool verboseMode = true;
+
 	bool spawningActive = true;
 	TSGamePiece[] boardPieces;
 	TSGameTile[] boardTiles;
 	TSGameTile activeTile;
     TSDataController data;
     TSTaskDescriptor currentTask;
+    VariableFetcher fetcher;
+
     double responseTime = 0;
     double taskTime = 0;
 
@@ -125,12 +133,19 @@ public class TSGameController : SingletonController<TSGameController>
 		rightButton.SetText(rightKey.ToString());
         data = TSDataController.Instance;
         data.SubscribeToGameEnd(handleGameEnd);
+        fetcher = VariableFetcher.Get;
+        fetchTunableVariables();
 	}
         
     protected override void cleanupReferences()
     {
         base.cleanupReferences();
         data.UnsubscribeFromGameEnd(handleGameEnd);
+    }
+
+    void fetchTunableVariables()
+    {
+        fetchSpawnDelay();
     }
 
 	void initBoardTiles(TSGameTile[] boardTiles)
@@ -438,5 +453,27 @@ public class TSGameController : SingletonController<TSGameController>
 	{
 		return ArrayUtil.Contains(this.validOddNumbers, number);
 	}
+
+    void fetchSpawnDelay()
+    {
+        fetcher.GetValue(SPAWN_DELAY_KEY, setSpawnDelay);
+    }
+
+    void setSpawnDelay(object value)
+    {
+        try
+        {
+            if(verboseMode)
+            {
+                Debug.LogFormat("Retrieved value {0} for spawnDelay", value);
+            }
+            float valueAsFloat = (float) value;
+            this.spawnDelay = valueAsFloat;
+        }
+        catch
+        {
+            Debug.LogError("Unable to set spawn delay. Could not cast value to float");
+        }
+    }
 
 }
