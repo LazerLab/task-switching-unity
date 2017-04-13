@@ -76,7 +76,7 @@ public class TSDataController : SingletonController<TSDataController>
         base.setReferences();
         game = getNewGame();
         data = DataCollector.Get;
-        data.TrackExperiment(experimentName);
+        data.SetActiveExperiment(experimentName);
     }
 
     TSGameState getNewGame()
