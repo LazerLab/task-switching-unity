@@ -126,7 +126,7 @@ public class TSGameController : SingletonController<TSGameController>
         data = TSDataController.Instance;
         data.SubscribeToGameEnd(handleGameEnd);
 	}
-
+        
     protected override void cleanupReferences()
     {
         base.cleanupReferences();
