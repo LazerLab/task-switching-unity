@@ -14,7 +14,7 @@ public class TSDataController : SingletonController<TSDataController>
 {
     // Modified func call as a workaround to using the iframe:
     const string SUBMIT_FUNC = "parent.postMessage";
-	const string POST_SOURCE = "https://lazerlab.github.io/task-switching-unity/";
+	const string POST_SOURCE = "https://volunteerscience.com/";
 
     public TSMode CurrentMode
     {
@@ -127,7 +127,8 @@ public class TSDataController : SingletonController<TSDataController>
         {
             Debug.Log(currentExperiment.LastRowToString());
         }
-		Application.ExternalCall(SUBMIT_FUNC, currentExperiment.LastRowToString(), POST_SOURCE);
+        string jsMessage = string.Format("{0}('{1}', '*');", SUBMIT_FUNC, currentExperiment.LastRowToString());
+        Application.ExternalEval(jsMessage);
     }
 
     public void SubscribeToGameEnd(MonoAction handler)
