@@ -12,7 +12,7 @@ namespace VolunteerScience
 {	
 	public class DataCollector : Singleton<DataCollector>
 	{
-        const string SUBMIT_FUNC = "parent.postMessage";
+        const string SUBMIT_FUNC = "submit";
         const string ACTIVE_EXPERIMENT_NOT_SET = "Active experiment not set";
 
         bool hasActiveExperiment
@@ -102,7 +102,7 @@ namespace VolunteerScience
 
         void submitData(string dataAsString)
         {
-            string jsMessage = string.Format("{0}('{1}', '*');", SUBMIT_FUNC, dataAsString);
+            string jsMessage = string.Format("{0}('{1}');", SUBMIT_FUNC, dataAsString);
             Application.ExternalEval(jsMessage);
         }
 
