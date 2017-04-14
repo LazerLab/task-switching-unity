@@ -36,7 +36,7 @@ function handleFetchEventCallback(eventData)
 
 function submit(data)
 {
-     parentWindow.postMessage(SUBMIT_KEY + JOIN_CHAR + data, "*");
+     parent.window.postMessage(SUBMIT_KEY + JOIN_CHAR + data, "*");
 }
 
 function fetch(key, gameObject, callbackFunction)
