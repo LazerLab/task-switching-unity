@@ -467,7 +467,7 @@ public class TSGameController : SingletonController<TSGameController>
             {
                 Debug.LogFormat("Retrieved value {0} for spawnDelay", value);
             }
-            float valueAsFloat = float.Parse(value);
+            float valueAsFloat = float.Parse(value.ToString());
             this.spawnDelay = valueAsFloat;
         }
         catch
