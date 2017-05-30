@@ -73,14 +73,21 @@ public class TSDataController : SingletonController<TSDataController>
         game = getNewGame();
         data = DataCollector.Get;
         data.SetActiveExperiment(experimentName);
-		TaskBatch batch = new TaskBatch("batch1", test);
     }
+
+	protected override void fetchReferences()
+	{
+		base.fetchReferences();
+		TaskBatch batch1 = new TaskBatch("batch1", test);
+		TaskBatch batch2 = new TaskBatch("batch2", test);
+		TaskBatch batch3 = new TaskBatch("batch3", test);
+	}
 
 	void test()
 	{
 		if(verboseMode)
 		{
-			Debug.Log("Batch 1 processed");
+			Debug.Log("Batch processed");
 		}
 	}
 
