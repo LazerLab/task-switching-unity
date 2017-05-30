@@ -23,6 +23,14 @@ namespace VolunteerScience
 			}
 		}
 
+        public static bool HasInstance
+        {
+            get
+            {
+                return _instance != null;
+            }
+        }
+
 		static T _instance;
 
 		// Creates a new instance in the game world
@@ -33,6 +41,14 @@ namespace VolunteerScience
 			singletonGameObject.name = string.Format("{0}_{1}", typeof(T).ToString(), INSTANCE_KEY);
 			return singletonGameObject.AddComponent<T>();
 		}
+
+        protected virtual void Awake()
+        {
+            if(_instance == null)
+            {
+                _instance = this as T;
+            }
+        }
 
 	}
 }

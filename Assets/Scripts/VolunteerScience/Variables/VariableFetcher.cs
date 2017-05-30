@@ -6,89 +6,90 @@
 
 namespace VolunteerScience
 {
-    using UnityEngine;
-
     using System;
     using System.Collections.Generic;
 
+    using UnityEngine;
+
     public class VariableFetcher : Singleton<VariableFetcher>
     {
+		const string CONSUMABLE_KEY = "vs_consumables";
+		const string MATRIX_KEY = "vs_matrix";
+		const string SET_CONSUMABLES_FUNC = "setConsumables";
+
+		const char JOIN_CHAR = ':';
+
         public VariableFetchAction GetValue(string key, Action<object> callback)
         {
             return new VariableFetchAction(key, callback);
         }
 
-    }
-
-    public class VariableFetchAction 
-    {
-        const string RECEIVE_FUNC = "Receive";
-        const string FETCH_FUNC = "fetch";
-
-        Action<object> callback;
-        string key;
-        GameObject callbackObj;
-
-        internal VariableFetchAction(string key, Action<object> callback)
+        public StringFetchAction GetString(string key, Action<string> callback)
         {
-            this.key = key;
-            this.callback = callback;
-            run();
-        }
-            
-        public void RunCallback(object value)
-        {
-            callback(value);
+            return new StringFetchAction(key, callback);
         }
 
-        void run()
+        public FloatFetchAction GetFloat(string key, Action<float> callback)
         {
-            // Setup GameObject to receiver
-            this.callbackObj = createObject();
-            string jsCall = getJSCall(this.key, this.callbackObj);
-            Application.ExternalEval(jsCall);
+            return new FloatFetchAction(key, callback);
         }
 
-        /*
-         * Should generate a call in the following format
-         * SendMessage([GameObject Name], 'Receive', variables['key']);
-         */
-        string getJSCall(string key, GameObject receiver)
+        public IntFetchAction GetInt(string key, Action<int> callback)
         {
-            return string.Format("{0}('{1}', '{2}', '{3}');", 
-                FETCH_FUNC,
-                key,
-                receiver.name,
-                RECEIVE_FUNC);
+            return new IntFetchAction(key, callback);
         }
 
-        GameObject createObject()
+        public BoolFetchAction GetBool(string key, Action<bool> callback)
         {
-            GameObject receiverObj = new GameObject();
-            // Create a random ID for this GO:
-            receiverObj.name = Guid.NewGuid().ToString();
-            // Hide this so it doesn't crowd the scene
-            receiverObj.hideFlags = HideFlags.HideInHierarchy;
-            receiverObj.AddComponent<VariableReceiveHandler>().Set(this);
-            return receiverObj;
+            return new BoolFetchAction(key, callback);
         }
 
-    }
-
-    public class VariableReceiveHandler : MonoBehaviour
-    {
-        VariableFetchAction fetcher;
-
-        public void Set(VariableFetchAction fetcher)
+        public VariableListFetchAction GetValueList(string key, Action<string[]> callback)
         {
-            this.fetcher = fetcher;
+            return new VariableListFetchAction(key, callback);
         }
 
-        public void Receive(object value)
+		public VariableListFetchAction GetConsumables(string consumableClass, string consumableSet, int amount, Action<string[]> callback)
+		{
+			return new VariableListFetchAction(getConsumablesKey(consumableClass, consumableSet, amount), callback);
+		}
+
+		public void SetConsumables(string consumableClass, string consumableSet, string usedConsumable)
+		{
+			Application.ExternalCall(SET_CONSUMABLES_FUNC, consumableClass, consumableSet, usedConsumable);
+		}
+
+		// Row and column values are zero-indexed
+		public StringFetchAction GetMatrixValue(string matrix, int row, int column, Action<string> callback)
+		{
+			return new StringFetchAction(FormatFetchCall(MATRIX_KEY, matrix, row.ToString(), column.ToString()), callback);
+		}
+
+        public FloatListFetchAction GetFloatList(string key, Action<float[]> callback)
         {
-            fetcher.RunCallback(value);   
+            return new FloatListFetchAction(key, callback);
         }
+
+        public IntListFetchAction GetIntList(string key, Action<int[]> callback)
+        {
+            return new IntListFetchAction(key, callback);
+        }
+
+        public BoolListFetchAction GetBoolList(string key, Action<bool[]> callback)
+        {
+            return new BoolListFetchAction(key, callback);
+        }
+
+		public string FormatFetchCall(params string[] subKeys)
+		{
+			return string.Join(JOIN_CHAR.ToString(), subKeys);
+		}
+
+		string getConsumablesKey(string consumableClass, string consumableSet, int amount)
+		{
+			return string.Format("{1}{0}{2}{0}{3}{0}{4}", JOIN_CHAR, CONSUMABLE_KEY, consumableClass, consumableSet, amount);
+		}
 
     }
-
+        
 }
