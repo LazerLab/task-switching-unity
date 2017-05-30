@@ -73,7 +73,16 @@ public class TSDataController : SingletonController<TSDataController>
         game = getNewGame();
         data = DataCollector.Get;
         data.SetActiveExperiment(experimentName);
+		TaskBatch batch = new TaskBatch("batch1", test);
     }
+
+	void test()
+	{
+		if(verboseMode)
+		{
+			Debug.Log("Batch 1 processed");
+		}
+	}
 
     TSGameState getNewGame()
     {
