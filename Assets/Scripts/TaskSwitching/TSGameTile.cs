@@ -30,15 +30,15 @@ public class TSGameTile : TSGameObject
 	{
 		get
 		{
-			if(this.tileMatchCondition == TSMatchCondition.ConsonantLetter || 
-				this.tileMatchCondition == TSMatchCondition.VowelLetter)
+			if(this.tileMatchCondition == TSMatchCondition.Stimuli2Category2 || 
+				this.tileMatchCondition == TSMatchCondition.Stimuli2Category1)
 			{
-				return TSMatchType.Letter;
+				return TSMatchType.Stimuli1;
 			}
-			else if(this.tileMatchCondition == TSMatchCondition.EvenNumber ||
-				this.tileMatchCondition == TSMatchCondition.OddNumber)
+			else if(this.tileMatchCondition == TSMatchCondition.Stimuli1Category1 ||
+				this.tileMatchCondition == TSMatchCondition.Stimuli1Category2)
 			{
-				return TSMatchType.Number;
+				return TSMatchType.Stimuli2;
 			}
 			else
 			{

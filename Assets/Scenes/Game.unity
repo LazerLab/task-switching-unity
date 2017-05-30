@@ -220,26 +220,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &470568237 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1460467723214094, guid: 81a59065cb9bf4270aa98a543421d0b1,
-    type: 2}
-  m_PrefabInternal: {fileID: 666705718}
---- !u!114 &470568238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 470568237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3d9e36af4bc647c6aa5215c05ca7fce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  preserveOnSceneChange: 0
-  numTasksPerMode: 40
-  experimentName: Task Switching
-  verboseMode: 1
 --- !u!1001 &666705718
 Prefab:
   m_ObjectHideFlags: 0
@@ -697,10 +677,20 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 114631851547457314, guid: 81a59065cb9bf4270aa98a543421d0b1,
+    - target: {fileID: 114120689289255316, guid: 81a59065cb9bf4270aa98a543421d0b1,
         type: 2}
-      propertyPath: m_MatchWidthOrHeight
-      value: 1
+      propertyPath: m_Text
+      value: Category 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114948997884029932, guid: 81a59065cb9bf4270aa98a543421d0b1,
+        type: 2}
+      propertyPath: m_Text
+      value: Category 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114596665776517246, guid: 81a59065cb9bf4270aa98a543421d0b1,
+        type: 2}
+      propertyPath: numTasksPerMode
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 81a59065cb9bf4270aa98a543421d0b1, type: 2}
