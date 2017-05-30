@@ -12,9 +12,13 @@ namespace VolunteerScience
 {	
 	public class DataCollector : Singleton<DataCollector>
 	{
+		// JavaScript to call in the web page of the WebGL build
         const string SUBMIT_FUNC = "submit";
+
+		// Error message:
         const string ACTIVE_EXPERIMENT_NOT_SET = "Active experiment not set";
 
+		// Used internally to ensure an Active Experiment exists
         bool hasActiveExperiment
         {
             get
@@ -23,9 +27,12 @@ namespace VolunteerScience
             }
         }
 
+		// Saves experiments by name
 		Dictionary<string, Experiment> instances = new Dictionary<string, Experiment>();
-        Experiment activeExperiment;
+        // Tracks currently active experiment
+		Experiment activeExperiment;
 
+		// Creates a new experiment with the specified name
 		public Experiment TrackExperiment(string instanceName)
 		{
 			Experiment exp = new Experiment(instanceName);
@@ -33,6 +40,7 @@ namespace VolunteerScience
 			return exp;
 		}
 
+		// Fetches or creates an experiment if it does not already exist
 		public Experiment GetExperiment(string name)
 		{
 			Experiment exp;
@@ -46,11 +54,27 @@ namespace VolunteerScience
 			}
 		}
 
+		// Returns the active experiment or null
+		public Experiment GetActiveExperiment()
+		{
+			if(hasActiveExperiment)
+			{
+				return activeExperiment;
+			}
+			else
+			{
+				Debug.LogErrorFormat("{0}. Returning null", ACTIVE_EXPERIMENT_NOT_SET);
+				return null;
+			}
+		}
+
+		// Sets the active experiment
         public void SetActiveExperiment(string name)
         {
             this.activeExperiment = GetExperiment(name);
         }
 
+		// Adds a row of data to the current experiment
         public void AddDataRow(params object[] data)
         {
             if(hasActiveExperiment)
@@ -63,6 +87,7 @@ namespace VolunteerScience
             }
         }
 
+		// Starts a timer on the active experiment
         public void TimeEvent(string eventName)
         {
             if(hasActiveExperiment)
@@ -75,6 +100,7 @@ namespace VolunteerScience
             }
         }
             
+		// Gets how much time has passed since the timer begun
         public double GetEventTimeSeconds(string eventName)
         {
             if(hasActiveExperiment)
@@ -88,6 +114,7 @@ namespace VolunteerScience
             }
         }
 
+		// Submits the most recently added row of data for the experiment
         public void SubmitLastDataRow()
         {
             if(hasActiveExperiment)
@@ -100,6 +127,13 @@ namespace VolunteerScience
             }
         }
 
+		// Submits a string of data directly to Volunteer Science
+        public void SubmitData(string dataAsString)
+        {
+            submitData(dataAsString);
+        }
+
+		// Formats the submit call
         void submitData(string dataAsString)
         {
             string jsMessage = string.Format("{0}('{1}');", SUBMIT_FUNC, dataAsString);
@@ -111,8 +145,10 @@ namespace VolunteerScience
 	[System.Serializable]
 	public class Experiment
 	{
+		// Each piece of data in a data row is separated by this character
         const string DATA_SEPARATOR = ",";
 
+		// Accessors for the name of the experiment
 		public string GetName
 		{
 			get
@@ -122,7 +158,9 @@ namespace VolunteerScience
 		}
 			
 		string experimentName;
+		// Stores all of data saved in this experiment
         List<object[]> dataRows;
+		// Saves timers in a Dictionary by name
         Dictionary<string, DateTime> activeTimers;
 
 		public Experiment(string name)
@@ -132,28 +170,31 @@ namespace VolunteerScience
             this.activeTimers = new Dictionary<string, DateTime>();
 		}
 
+		// Can take any arguments for the data row
         public void AddDataRow(params object[] data)
         {
             this.dataRows.Add(data);
         }
 
+		// Converts the most recently added row to a string
         public string LastRowToString()
         {
             return RowToString(dataRows.Count - 1);
         }
 
+		// Converts a specified row to a string, inserting commas between each piece of data
         public string RowToString(int rowIndex)
         {
-            string dataAsString = string.Empty;
+			System.Text.StringBuilder dataString = new System.Text.StringBuilder();
             try
             {   
                 object[] data = dataRows[rowIndex];
                 for(int i = 0; i < data.Length - 1; i++)
                 {
-                    dataAsString += data[i].ToString() + DATA_SEPARATOR;
+					dataString.Append(data[i].ToString() + DATA_SEPARATOR);
                 }
-                dataAsString += data[data.Length - 1].ToString();
-                return dataAsString;
+				dataString.Append(data[data.Length - 1].ToString());
+				return dataString.ToString();
             }
             catch
             {
@@ -161,11 +202,13 @@ namespace VolunteerScience
             }
         }
 
+		// Creates a new timer within the experiment
         public void TimeEvent(string key)
         {
             this.activeTimers[key] = DateTime.Now;
         }
 
+		// Returns how long has passed since the timer started
         public double GetEventTimeSeconds(string key)
         {
             DateTime startTime;
