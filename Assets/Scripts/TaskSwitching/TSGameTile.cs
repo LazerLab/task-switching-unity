@@ -33,12 +33,12 @@ public class TSGameTile : TSGameObject
 			if(this.tileMatchCondition == TSMatchCondition.Stimuli2Category2 || 
 				this.tileMatchCondition == TSMatchCondition.Stimuli2Category1)
 			{
-				return TSMatchType.Stimuli1;
+				return TSMatchType.Stimuli2;
 			}
 			else if(this.tileMatchCondition == TSMatchCondition.Stimuli1Category1 ||
 				this.tileMatchCondition == TSMatchCondition.Stimuli1Category2)
 			{
-				return TSMatchType.Stimuli2;
+				return TSMatchType.Stimuli1;
 			}
 			else
 			{

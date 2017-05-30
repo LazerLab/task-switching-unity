@@ -188,7 +188,7 @@ public class TSGameController : SingletonController<TSGameController>
 		{
 			boardPieces[i] = Instantiate(piecePrefab);
 			boardPieces[i].transform.SetParent(boardParent);
-            boardPieces[i].transform.localScale = Vector3.one;
+            boardPieces[i].transform.localScale = Vector3.one * 2;
 			boardPieces[i].Init(index:i);
 			boardPieces[i].ToggleVisible(startActive);
 		}
@@ -383,22 +383,22 @@ public class TSGameController : SingletonController<TSGameController>
 		{
 			if(type == TSMatchType.Stimuli1)
 			{
-				return TSMatchCondition.Stimuli2Category2;
+				return TSMatchCondition.Stimuli1Category1;
 			}
 			else if (type == TSMatchType.Stimuli2)
 			{
-				return TSMatchCondition.Stimuli1Category2;
+				return TSMatchCondition.Stimuli2Category1;
 			}
 		}
 		else if(key == rightKey)
 		{
 			if(type == TSMatchType.Stimuli1)
 			{
-				return TSMatchCondition.Stimuli2Category1;
+				return TSMatchCondition.Stimuli1Category2;
 			}
 			else if (type == TSMatchType.Stimuli2)
 			{
-				return TSMatchCondition.Stimuli1Category1;
+				return TSMatchCondition.Stimuli2Category2;
 			}
 		}
 

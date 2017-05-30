@@ -542,7 +542,7 @@ MonoBehaviour:
   successIcon: {fileID: 1220082668701856}
   failureIcon: {fileID: 1649189479247444}
   timeShowIcon: 1
-  tileMatchCondition: 0
+  tileMatchCondition: 3
 --- !u!114 &114008453257401262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -710,7 +710,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Odd
+  m_Text: Category 1
 --- !u!114 &114196077163037306
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -759,7 +759,7 @@ MonoBehaviour:
   successIcon: {fileID: 1996554839918276}
   failureIcon: {fileID: 1554268042416732}
   timeShowIcon: 1
-  tileMatchCondition: 2
+  tileMatchCondition: 1
 --- !u!114 &114214341293887504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1024,7 +1024,7 @@ MonoBehaviour:
   successIcon: {fileID: 1787357613373970}
   failureIcon: {fileID: 1080591735882300}
   timeShowIcon: 1
-  tileMatchCondition: 3
+  tileMatchCondition: 0
 --- !u!114 &114475322848420410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1151,7 +1151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preserveOnSceneChange: 0
-  numTasksPerMode: 40
+  numTasksPerMode: 10
   experimentName: Task Switching
   verboseMode: 1
 --- !u!114 &114631851547457314
@@ -1250,7 +1250,7 @@ MonoBehaviour:
   successIcon: {fileID: 1683496213799344}
   failureIcon: {fileID: 1258040563151542}
   timeShowIcon: 1
-  tileMatchCondition: 1
+  tileMatchCondition: 2
 --- !u!114 &114717164331743860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1493,7 +1493,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Even
+  m_Text: Category 2
 --- !u!114 &114961633313700880
 MonoBehaviour:
   m_ObjectHideFlags: 1
