@@ -12,11 +12,15 @@ using VolunteerScience;
 
 public class TSDataController : SingletonController<TSDataController> 
 {
-    public TSMode CurrentMode
+	const string BATCH_KEY = "batch";
+	const int START_BATCH = 1;
+	const int BATCH_COUNT = 3;
+
+    public int CurrentBatchIndex
     {
         get
         {
-            return game.CurrentMode;
+            return game.CurrentBatchIndex;
         }
     }
 
@@ -34,14 +38,21 @@ public class TSDataController : SingletonController<TSDataController>
         }
     }
 
-    int currentModeIndex
-    {
-        get
-        {
-            return (int) CurrentMode;
-        }
-    }
- 
+	public TaskBatch CurrentBatch
+	{
+		get
+		{
+			if(CurrentBatchIndex >= batches.Length)
+			{
+				return batches[randomBatch];
+			}
+			else
+			{
+				return batches[CurrentBatchIndex];
+			}
+		}
+	}
+
     int currentTaskIndexInMode
     {
         get
@@ -63,9 +74,28 @@ public class TSDataController : SingletonController<TSDataController>
 
     #endregion
 
+	TSUIController ui;
     TSGameState game;
     MonoAction onGameEnd;
     DataCollector data;
+	TaskBatch[] batches;
+	int batchCount = 0;
+	int randomBatch;
+
+	public bool AllBatchesProcessed()
+	{
+		return batchCount >= BATCH_COUNT;
+	}
+
+	public int GetStimuli1Index(string stimuli)
+	{
+		return CurrentBatch.GetStimuli1Index(stimuli);
+	}
+
+	public int GetStimuli2Index(string stimuli)
+	{
+		return CurrentBatch.GetStimuli2Index(stimuli);
+	}
 
     protected override void setReferences()
     {
@@ -73,14 +103,35 @@ public class TSDataController : SingletonController<TSDataController>
         game = getNewGame();
         data = DataCollector.Get;
         data.SetActiveExperiment(experimentName);
-		TaskBatch batch = new TaskBatch("batch1", test);
     }
 
-	void test()
+	protected override void fetchReferences()
 	{
+		base.fetchReferences();		
+		ui = TSUIController.Instance;
+		createBatches();
+	}
+
+	void createBatches()
+	{
+		batches = new TaskBatch[BATCH_COUNT];
+		for(int i = START_BATCH; i <= BATCH_COUNT; i++)
+		{
+			batches[i - 1] = new TaskBatch(string.Format("{0}{1}", BATCH_KEY, i), processBatch);
+		}
+		randomBatch = UnityEngine.Random.Range(0, BATCH_COUNT + 1);
+	}
+
+	void processBatch()
+	{
+		batchCount++;
 		if(verboseMode)
 		{
-			Debug.Log("Batch 1 processed");
+			Debug.Log("Batch Processed");
+		}
+		if(AllBatchesProcessed())
+		{
+			ui.SetLabels(CurrentBatch);
 		}
 	}
 
@@ -88,11 +139,16 @@ public class TSDataController : SingletonController<TSDataController>
     {
         TSGameState game = new TSGameState();
         // Sets the current mode to the first mode in the enum
-        game.CurrentMode = (TSMode) 0;
+        game.CurrentBatchIndex = 0;
         game.CurrentTaskIndex = 0;
         game.CompletedTasks = new List<TSTaskDescriptor>();
         return game;
     }
+
+	public StimuliSet GetSet()
+	{
+		return CurrentBatch.GetSet();
+	}
 
     public void StartTimer(string key)
     {
@@ -111,16 +167,15 @@ public class TSDataController : SingletonController<TSDataController>
 
     public bool IsLastMode()
     {
-        return currentModeIndex == getNumModes() - 1;
+		return CurrentBatchIndex == getNumModes() - 1;
     }
 
     // Wrap functionality
     public void NextMode()
     {
-        int modeIndex = currentModeIndex;
-        modeIndex++;
-        modeIndex %= getNumModes();
-        game.CurrentMode = (TSMode) modeIndex;
+		game.CurrentBatchIndex++;
+		game.CurrentBatchIndex %= getNumModes();
+		ui.SetLabels(CurrentBatch);
     }
 
     public void CompleteTask(TSTaskDescriptor task)
@@ -175,7 +230,8 @@ public class TSDataController : SingletonController<TSDataController>
 
     int getNumModes()
     {
-        return Enum.GetValues(typeof(TSMode)).Length;
+		// Extra random batch at end
+		return BATCH_COUNT + 1;
     }
 
 }
@@ -183,7 +239,7 @@ public class TSDataController : SingletonController<TSDataController>
 [System.Serializable]
 public struct TSGameState
 {
-    public TSMode CurrentMode;
+    public int CurrentBatchIndex;
     public int CurrentTaskIndex;
     public List<TSTaskDescriptor> CompletedTasks;
 }
@@ -194,8 +250,8 @@ public class TSTaskDescriptor
     public string BlockName;
     public int StimulusPosition; // 1,2,3,4 (top left, top right, bottom right, bottom left
     public int TaskType; // 1 for letter, 2 for number
-    public int LetterStimulusIndex; // index of letter in list
-    public int NumberStimulus; // number value
+    public int Stimuli1Index; // index of letter in list
+    public int Stimuli2Index; // number value
     public int TypeOfBlock; // (1=just task 1; 2=just task 2; 0=both tasks mixed)
     public int IsNewTaskSwitch; // 1=task switch , 0=task repeat
     public int ResponseStatus; // (1=correct, 2=error, 3=too slow)
@@ -209,8 +265,8 @@ public class TSTaskDescriptor
             BlockName,
             StimulusPosition,
             TaskType,
-            LetterStimulusIndex,
-            NumberStimulus,
+            Stimuli1Index,
+            Stimuli2Index,
             TypeOfBlock,
             IsNewTaskSwitch,
             ResponseStatus,
@@ -220,25 +276,18 @@ public class TSTaskDescriptor
     }
 }
 
-public enum TSMode
-{
-    LeterRow,
-    NumberRow,
-    MixedRows
-}
-
 public enum TSMatchCondition
 {
-    EvenNumber,
-    OddNumber,
-    VowelLetter,
-    ConsonantLetter,
+    Stimuli1Category1,
+    Stimuli1Category2,
+    Stimuli2Category1,
+    Stimuli2Category2,
 }
 
 public enum TSMatchType
 {
-    Letter,
-    Number,
+    Stimuli1,
+    Stimuli2,
 }
 
 public enum TSTaskType

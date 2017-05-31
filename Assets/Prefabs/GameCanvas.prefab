@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 222250679226136086}
   - component: {fileID: 114948997884029932}
   m_Layer: 5
-  m_Name: Text (3)
+  m_Name: Stimuli2Category2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 222545210080899222}
   - component: {fileID: 114196077163037306}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Stimuli1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 222986122676245864}
   - component: {fileID: 114032389870843328}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Stimuli1Category2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 222087502345452060}
   - component: {fileID: 114120689289255316}
   m_Layer: 5
-  m_Name: Text (2)
+  m_Name: Stimuli2Category1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 222340012858632368}
   - component: {fileID: 114425708550870136}
   m_Layer: 5
-  m_Name: Text (2)
+  m_Name: Stimuli2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,6 +278,8 @@ GameObject:
   - component: {fileID: 114631851547457314}
   - component: {fileID: 114512249971774502}
   - component: {fileID: 114317132196165968}
+  - component: {fileID: 114596665776517246}
+  - component: {fileID: 114241609337299258}
   m_Layer: 5
   m_Name: GameCanvas
   m_TagString: Untagged
@@ -313,7 +315,7 @@ GameObject:
   - component: {fileID: 222496145487368878}
   - component: {fileID: 114117917302413798}
   m_Layer: 5
-  m_Name: Text (3)
+  m_Name: Stimuli2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -416,7 +418,7 @@ GameObject:
   - component: {fileID: 222484142473231224}
   - component: {fileID: 114550964250537738}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Stimuli1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,7 +468,7 @@ GameObject:
   - component: {fileID: 222961824946941022}
   - component: {fileID: 114779588537649156}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Stimuli1Category1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -540,7 +542,7 @@ MonoBehaviour:
   successIcon: {fileID: 1220082668701856}
   failureIcon: {fileID: 1649189479247444}
   timeShowIcon: 1
-  tileMatchCondition: 0
+  tileMatchCondition: 3
 --- !u!114 &114008453257401262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -588,7 +590,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Vowel
+  m_Text: Category 2
 --- !u!114 &114037143970519638
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -666,7 +668,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 3b4c2d054439343fe98eedf6bcd4898b, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 50
     m_Alignment: 0
@@ -675,7 +677,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Number
+  m_Text: Stimuli 2
 --- !u!114 &114120689289255316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -708,7 +710,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Odd
+  m_Text: Category 1
 --- !u!114 &114196077163037306
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -732,7 +734,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 3b4c2d054439343fe98eedf6bcd4898b, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 50
     m_Alignment: 0
@@ -741,7 +743,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Letter
+  m_Text: Stimuli 1
 --- !u!114 &114203470202270994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -757,7 +759,7 @@ MonoBehaviour:
   successIcon: {fileID: 1996554839918276}
   failureIcon: {fileID: 1554268042416732}
   timeShowIcon: 1
-  tileMatchCondition: 2
+  tileMatchCondition: 1
 --- !u!114 &114214341293887504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -812,6 +814,28 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114241609337299258
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1460467723214094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b4048d29fc2473d8f6e28b7b06ec70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preserveOnSceneChange: 0
+  stimuli1Category1: {fileID: 114779588537649156}
+  stimuli1Category2: {fileID: 114032389870843328}
+  stimuli2Category1: {fileID: 114120689289255316}
+  stimuli2Category2: {fileID: 114948997884029932}
+  stimuli1:
+  - {fileID: 114550964250537738}
+  - {fileID: 114196077163037306}
+  stimuli2:
+  - {fileID: 114425708550870136}
+  - {fileID: 114117917302413798}
 --- !u!114 &114290908628915320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -870,6 +894,7 @@ MonoBehaviour:
   piecePrefab: {fileID: 114917151921109320, guid: 19ee40f4a6c9046cc85499e2d0876126,
     type: 2}
   boardParent: {fileID: 224136598098965506}
+  verboseMode: 1
 --- !u!114 &114401573369530806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -974,7 +999,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 3b4c2d054439343fe98eedf6bcd4898b, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 50
     m_Alignment: 0
@@ -983,7 +1008,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Number
+  m_Text: Stimuli 2
 --- !u!114 &114426592594333640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -999,7 +1024,7 @@ MonoBehaviour:
   successIcon: {fileID: 1787357613373970}
   failureIcon: {fileID: 1080591735882300}
   timeShowIcon: 1
-  tileMatchCondition: 3
+  tileMatchCondition: 0
 --- !u!114 &114475322848420410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1104,7 +1129,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 3b4c2d054439343fe98eedf6bcd4898b, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 50
     m_Alignment: 0
@@ -1113,7 +1138,22 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Letter
+  m_Text: Stimuli 1
+--- !u!114 &114596665776517246
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1460467723214094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d9e36af4bc647c6aa5215c05ca7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preserveOnSceneChange: 0
+  numTasksPerMode: 10
+  experimentName: Task Switching
+  verboseMode: 1
 --- !u!114 &114631851547457314
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1130,7 +1170,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1210,7 +1250,7 @@ MonoBehaviour:
   successIcon: {fileID: 1683496213799344}
   failureIcon: {fileID: 1258040563151542}
   timeShowIcon: 1
-  tileMatchCondition: 1
+  tileMatchCondition: 2
 --- !u!114 &114717164331743860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1297,7 +1337,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Consonant
+  m_Text: Category 1
 --- !u!114 &114817487540503750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1453,7 +1493,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Even
+  m_Text: Category 2
 --- !u!114 &114961633313700880
 MonoBehaviour:
   m_ObjectHideFlags: 1

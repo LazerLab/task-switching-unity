@@ -25,12 +25,14 @@ public class TaskBatch
 	#endregion
 
 	string batchKey;
-	string firstStimuli;
-	string secondStimuli;
-	string firstStimuliCategory1, firstStimuliCategory2;
-	string secondStimuliCategory1, secondStimuliCategory2;
+	public string FirstStimuli;
+	public string SecondStimuli;
+	public string FirstStimuliCategory1, FirstStimuliCategory2;
+	public string SecondStimuliCategory1, SecondStimuliCategory2;
 	string[] firstStimuliCategory1Options, firstStimuliCategory2Options;
 	string[] secondStimuliCategory1Options, secondStimuliCategory2Options;
+	string[] firstStimuliOptions;
+	string[] secondStimuliOptions;
 
 	Action onStimuliFetched;
 	bool finalFetchCallbackFired = false;
@@ -44,28 +46,73 @@ public class TaskBatch
 		fetcher.GetValueList(batchKey, getStimuliNames);
 	}
 
+	public StimuliSet GetSet()
+	{
+		return new StimuliSet(randomStimuli1(), randomStimuli2());
+	}
+
+	public int GetStimuli1Index(string stimuli)
+	{
+		return ArrayUtil.IndexOf(firstStimuliOptions, stimuli);
+	}
+
+	public int GetStimuli2Index(string stimuli)
+	{
+		return ArrayUtil.IndexOf(secondStimuliOptions, stimuli);
+	}
+
+	public bool IsValidStimuli1Category1(string stimuli)
+	{
+		return ArrayUtil.Contains(firstStimuliCategory1Options, stimuli);
+	}
+
+	public bool IsValidStimuli1Category2(string stimuli)
+	{
+		return ArrayUtil.Contains(firstStimuliCategory2Options, stimuli);
+	}
+
+	public bool IsValidStimuli2Category1(string stimuli)
+	{
+		return ArrayUtil.Contains(secondStimuliCategory1Options, stimuli);
+	}
+
+	public bool IsValidStimuli2Category2(string stimuli)
+	{
+		return ArrayUtil.Contains(secondStimuliCategory2Options, stimuli);
+	}
+
+	string randomStimuli1()
+	{
+		return firstStimuliOptions[UnityEngine.Random.Range(0, firstStimuliOptions.Length)];
+	}
+
+	string randomStimuli2()
+	{
+		return secondStimuliOptions[UnityEngine.Random.Range(0, secondStimuliOptions.Length)];
+	}
+
 	void getStimuliNames(string[] names)
 	{
-		firstStimuli = names[0];
-		secondStimuli = names[1];
-		fetcher.GetValueList(firstStimuli, getFirstStimuliCategories);
-		fetcher.GetValueList(secondStimuli, getSecondStimuliCategories);
+		FirstStimuli = names[0];
+		SecondStimuli = names[1];
+		fetcher.GetValueList(FirstStimuli, getFirstStimuliCategories);
+		fetcher.GetValueList(SecondStimuli, getSecondStimuliCategories);
 	}
 
 	void getFirstStimuliCategories(string[] categories)
 	{
-		firstStimuliCategory1 = categories[0];
-		firstStimuliCategory2 = categories[1];
-		fetcher.GetValueList(firstStimuliCategory1, getFirstStimuliCategory1Options);
-		fetcher.GetValueList(firstStimuliCategory2, getFirstStimuliCategory2Options);
+		FirstStimuliCategory1 = categories[0];
+		FirstStimuliCategory2 = categories[1];
+		fetcher.GetValueList(FirstStimuliCategory1, getFirstStimuliCategory1Options);
+		fetcher.GetValueList(FirstStimuliCategory2, getFirstStimuliCategory2Options);
 	}
 
 	void getSecondStimuliCategories(string[] categories)
 	{
-		secondStimuliCategory1 = categories[0];
-		secondStimuliCategory2 = categories[1];
-		fetcher.GetValueList(secondStimuliCategory1, getSecondStimuliCategory1Options);
-		fetcher.GetValueList(secondStimuliCategory2, getSecondStimuliCategory2Options);
+		SecondStimuliCategory1 = categories[0];
+		SecondStimuliCategory2 = categories[1];
+		fetcher.GetValueList(SecondStimuliCategory1, getSecondStimuliCategory1Options);
+		fetcher.GetValueList(SecondStimuliCategory2, getSecondStimuliCategory2Options);
 	}
 
 	void getFirstStimuliCategory1Options(string[] options)
@@ -97,10 +144,8 @@ public class TaskBatch
 		if(shouldRunCallback())
 		{
 			onStimuliFetched();
-			Debug.Log(ArrayUtil.ToString(firstStimuliCategory1Options));
-			Debug.Log(ArrayUtil.ToString(firstStimuliCategory2Options));
-			Debug.Log(ArrayUtil.ToString(secondStimuliCategory1Options));
-			Debug.Log(ArrayUtil.ToString(secondStimuliCategory2Options));
+			firstStimuliOptions = ArrayUtil.Concat(firstStimuliCategory1Options, firstStimuliCategory2Options);
+			secondStimuliOptions = ArrayUtil.Concat(secondStimuliCategory1Options, secondStimuliCategory2Options);
 			finalFetchCallbackFired = true;
 		}
 	}
@@ -112,6 +157,19 @@ public class TaskBatch
 			secondStimuliCategory1Options != null &&
 			secondStimuliCategory2Options != null &&
 			!finalFetchCallbackFired;
+	}
+
+}
+
+public struct StimuliSet
+{
+	public string Stimuli1;
+	public string Stimuli2;
+
+	public StimuliSet(string stimuli1, string stimuli2)
+	{
+		this.Stimuli1 = stimuli1;
+		this.Stimuli2 = stimuli2;
 	}
 
 }
