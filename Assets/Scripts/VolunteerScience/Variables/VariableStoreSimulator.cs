@@ -18,9 +18,9 @@ namespace VolunteerScience
 
         #region Single Overrides
 
-        protected override void Awake ()
+        protected override void Awake()
         {
-            base.Awake ();
+            base.Awake();
             generateVariableLookup();
         }
 

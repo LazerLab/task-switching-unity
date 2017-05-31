@@ -23,11 +23,11 @@ public class TSGamePiece : TSGameObject
 	[SerializeField]
 	Text numberField;
 
-	public void SetPiece(char letter, int number)
+	public void SetPiece(string stimuli1, string stimuli2)
 	{
-		this.letterField.text = letter.ToString();
-		this.numberField.text = number.ToString();
-		this.ID = new TSPieceID(letter, number);
+		this.letterField.text = stimuli1;
+		this.numberField.text = stimuli2;
+		this.ID = new TSPieceID(stimuli1, stimuli2);
 		ToggleVisible(isVisibile:true);
 	}
 
@@ -40,22 +40,22 @@ public class TSGamePiece : TSGameObject
 
 public struct TSPieceID
 {
-	public char Letter
+	public string Stimuli1
 	{
 		get;
 		private set;
 	}
 
-	public int Number
+	public string Stimuli2
 	{
 		get;
 		private set;
 	}
 
-	public TSPieceID(char letter, int number)
+	public TSPieceID(string stimuli1, string stimuli2)
 	{
-		this.Letter = letter;
-		this.Number = number;
+		this.Stimuli1 = stimuli1;
+		this.Stimuli2 = stimuli2;
 	}
 
 }
