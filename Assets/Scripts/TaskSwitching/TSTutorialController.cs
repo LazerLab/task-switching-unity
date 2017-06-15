@@ -32,6 +32,10 @@ public class TSTutorialController : SingletonController<TSTutorialController>
 	[SerializeField]
 	string endText = "End";
 
+	[Header("Debugging")]
+	[SerializeField]
+	bool verboseMode;
+
 	TSTutorial tutorial;
 	bool tutorialComplete;
 
@@ -83,9 +87,18 @@ public class TSTutorialController : SingletonController<TSTutorialController>
 					fetcher.GetString(getTutorialKey(i), delegate(string message)
 						{
 							tutorial.SetStep(i, message);
+							if(verboseMode)
+							{
+								Debug.LogFormat("Setting tutorial step {0} to {1}", i, message);
+							}
 							if(tutorial.TutorialLoaded())
 							{
 								startTutorial(tutorial.CurrentStep());
+								if(verboseMode)
+								{
+									Debug.Log("Tutorial is beginning");
+								}
+									
 							}
 						});
 				}
