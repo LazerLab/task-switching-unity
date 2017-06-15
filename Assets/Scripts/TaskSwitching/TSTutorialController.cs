@@ -86,10 +86,11 @@ public class TSTutorialController : SingletonController<TSTutorialController>
 				{
 					fetcher.GetString(getTutorialKey(i), delegate(string message)
 						{
-							tutorial.SetStep(i, message);
+							int currentIndex = i;
+							tutorial.SetStep(currentIndex, message);
 							if(verboseMode)
 							{
-								Debug.LogFormat("Setting tutorial step {0} to {1}", i, message);
+								Debug.LogFormat("Setting tutorial step {0} to {1}", currentIndex, message);
 							}
 							if(tutorial.TutorialLoaded())
 							{
