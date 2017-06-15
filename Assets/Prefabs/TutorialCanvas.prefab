@@ -409,6 +409,7 @@ MonoBehaviour:
   previousKey: 276
   skipText: Skip
   endText: End
+  verboseMode: 0
 --- !u!114 &114418491121300744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -616,7 +617,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 3b4c2d054439343fe98eedf6bcd4898b, type: 3}
-    m_FontSize: 35
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
