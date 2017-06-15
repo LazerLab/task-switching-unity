@@ -87,12 +87,13 @@ public class TSGameController : SingletonController<TSGameController>
     [Header("Debugging")]
     [SerializeField]
     bool verboseMode = true;
-
+	bool tutorialComplete = false;
 	bool spawningActive = true;
 	TSGamePiece[] boardPieces;
 	TSGameTile[] boardTiles;
 	TSGameTile activeTile;
     TSDataController data;
+	TSTutorialController tutorial;
     TSTaskDescriptor currentTask;
     VariableFetcher fetcher;
 
@@ -140,6 +141,7 @@ public class TSGameController : SingletonController<TSGameController>
 		rightButton.SetText(rightKey.ToString());
         data = TSDataController.Instance;
         data.SubscribeToGameEnd(handleGameEnd);
+		tutorial = TSTutorialController.Instance;
         fetcher = VariableFetcher.Get;
         fetchTunableVariables();
 		StartCoroutine(waitToSpawn());
@@ -154,6 +156,7 @@ public class TSGameController : SingletonController<TSGameController>
 	IEnumerator waitToSpawn()
 	{
 		yield return new WaitUntil(data.AllBatchesProcessed);
+		yield return new WaitUntil(tutorial.TutorialComplete);
 		StartSpawning();
 	}
 
