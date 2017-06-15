@@ -84,9 +84,9 @@ public class TSTutorialController : SingletonController<TSTutorialController>
 				tutorial.Init(count);
 				for(int i = 0; i < count; i++)
 				{
-					fetcher.GetString(getTutorialKey(i), delegate(string message)
+					int currentIndex = i;
+					fetcher.GetString(getTutorialKey(currentIndex), delegate(string message)
 						{
-							int currentIndex = i;
 							tutorial.SetStep(currentIndex, message);
 							if(verboseMode)
 							{
