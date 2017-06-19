@@ -10,6 +10,9 @@ using UnityEngine.UI;
 public class TSUIController : SingletonController<TSUIController>
 {
 	[SerializeField]
+	GameObject completeMessage;
+
+	[SerializeField]
 	Text stimuli1Category1, stimuli1Category2, stimuli2Category1, stimuli2Category2;
 
 	[SerializeField]
@@ -29,6 +32,11 @@ public class TSUIController : SingletonController<TSUIController>
 		{
 			t.text = batch.SecondStimuli;
 		}
+	}
+
+	public void ShowComplete()
+	{
+		completeMessage.SetActive(true);
 	}
 
 }
