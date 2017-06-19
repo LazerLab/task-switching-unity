@@ -13,6 +13,8 @@ using VolunteerScience;
 public class TSDataController : SingletonController<TSDataController> 
 {
 	const string BATCH_KEY = "batch";
+	const string TASKS_PER_BATCH = "tasksPerBatch";
+
 	const int START_BATCH = 1;
 	const int BATCH_COUNT = 3;
 
@@ -57,14 +59,14 @@ public class TSDataController : SingletonController<TSDataController>
     {
         get
         {
-            return game.CurrentTaskIndex % numTasksPerMode;
+            return game.CurrentTaskIndex % numTasksPerBatch;
         }
     }
 
     #region Tunable Variables
 
     [SerializeField]
-    int numTasksPerMode = 40;
+	int numTasksPerBatch = 10;
 
     [SerializeField]
     string experimentName = "Task Switching";
@@ -110,8 +112,20 @@ public class TSDataController : SingletonController<TSDataController>
 		base.fetchReferences();		
 		ui = TSUIController.Instance;
 		createBatches();
+		fetchTunableVariables();
 	}
 
+	void fetchTunableVariables()
+	{
+		VariableFetcher.Get.GetInt(
+			TASKS_PER_BATCH,
+			delegate(int numTasks)
+			{
+				this.numTasksPerBatch = numTasks;	
+			}
+		);
+	}
+		
 	void createBatches()
 	{
 		batches = new TaskBatch[BATCH_COUNT];
@@ -119,7 +133,7 @@ public class TSDataController : SingletonController<TSDataController>
 		{
 			batches[i - 1] = new TaskBatch(string.Format("{0}{1}", BATCH_KEY, i), processBatch);
 		}
-		randomBatch = UnityEngine.Random.Range(0, BATCH_COUNT + 1);
+		randomBatch = UnityEngine.Random.Range(0, BATCH_COUNT);
 	}
 
 	void processBatch()
@@ -162,7 +176,7 @@ public class TSDataController : SingletonController<TSDataController>
 
     public bool ShouldSwitchMode()
     {
-        return currentTaskIndexInMode >= numTasksPerMode - 1;
+        return currentTaskIndexInMode >= numTasksPerBatch - 1;
     }
 
     public bool IsLastMode()

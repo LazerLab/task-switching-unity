@@ -363,6 +363,8 @@ public class TSGameController : SingletonController<TSGameController>
     void handleGameEnd()
     {
         StopCoroutine(spawningRoutine);
+		ExperimentController.Get.CompleteExperiment();
+		TSUIController.Instance.ShowComplete();
     }
 
 	TSGameTile getTargetTile(KeyCode key, TSGameTile occupiedTile)
