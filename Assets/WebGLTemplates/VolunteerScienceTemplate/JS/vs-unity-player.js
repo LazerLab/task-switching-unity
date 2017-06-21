@@ -134,6 +134,7 @@ function initialize()
 function receiverReady()
 {
      receiverIsReady = true;
+     parent.window.postMessage(RECEIVER_READY, "*");
 }
 
 // Sets up the event handler for when the Unity Player page receives messages via postMessage
