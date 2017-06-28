@@ -127,6 +127,19 @@ public static class ArrayUtil
 		return false;
 	}
 
+	// Checks whether a an array contains an element
+	public static bool Contains<T>(T[] source, T element, Func<T, T, bool> checkEquivalent)
+	{
+		for(int i = 0; i < source.Length; i++) 
+		{
+			if(checkEquivalent(source[i], element))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public static int Sum(params int[] values) 
 	{
 		int sum = 0;

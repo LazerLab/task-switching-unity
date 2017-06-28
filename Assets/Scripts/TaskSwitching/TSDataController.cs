@@ -121,7 +121,7 @@ public class TSDataController : SingletonController<TSDataController>
 			TASKS_PER_BATCH,
 			delegate(int numTasks)
 			{
-				this.numTasksPerBatch = numTasks;	
+				this.numTasksPerBatch = numTasks;
 			}
 		);
 	}
