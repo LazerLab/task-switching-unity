@@ -135,12 +135,12 @@ public class ImageTaskBatch : TaskBatch
 
 }
 
-public struct ImageStimuliSet
+public class ImageStimuliSet : StimuliSet
 {
-	public Sprite Stimuli1;
-	public Sprite Stimuli2;
+	public new Sprite Stimuli1;
+	public new Sprite Stimuli2;
 
-	public ImageStimuliSet(Sprite stimuli1, Sprite stimuli2)
+	public ImageStimuliSet(Sprite stimuli1, Sprite stimuli2) : base()
 	{
 		this.Stimuli1 = stimuli1;
 		this.Stimuli2 = stimuli2;

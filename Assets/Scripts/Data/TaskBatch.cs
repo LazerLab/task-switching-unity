@@ -166,10 +166,12 @@ public class TaskBatch
 
 }
 
-public struct StimuliSet
+public class StimuliSet
 {
 	public string Stimuli1;
 	public string Stimuli2;
+
+	protected StimuliSet(){}
 
 	public StimuliSet(string stimuli1, string stimuli2)
 	{

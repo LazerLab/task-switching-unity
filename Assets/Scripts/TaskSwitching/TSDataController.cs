@@ -13,6 +13,7 @@ using VolunteerScience;
 public class TSDataController : SingletonController<TSDataController> 
 {
 	const string BATCH_KEY = "batch";
+	const string IS_IMAGES_KEY = "IsImages";
 	const string TASKS_PER_BATCH = "tasksPerBatch";
 
 	const int START_BATCH = 1;
@@ -128,10 +129,22 @@ public class TSDataController : SingletonController<TSDataController>
 		
 	void createBatches()
 	{
+		VariableFetcher fetch = VariableFetcher.Get;
 		batches = new TaskBatch[BATCH_COUNT];
 		for(int i = START_BATCH; i <= BATCH_COUNT; i++)
 		{
-			batches[i - 1] = new TaskBatch(string.Format("{0}{1}", BATCH_KEY, i), processBatch);
+			fetch.GetBool(getImageCheckKey(i), delegate(bool isImages)
+				{
+					string batchName = string.Format("{0}{1}", BATCH_KEY, i);
+					if(isImages)
+					{
+						batches[i - 1] = new ImageTaskBatch(batchName, processBatch);
+					}
+					else
+					{
+						batches[i - 1] = new TaskBatch(batchName, processBatch);
+					}
+				});
 		}
 		randomBatch = UnityEngine.Random.Range(0, BATCH_COUNT);
 	}
@@ -158,6 +171,11 @@ public class TSDataController : SingletonController<TSDataController>
         game.CompletedTasks = new List<TSTaskDescriptor>();
         return game;
     }
+
+	string getImageCheckKey(int batchIndex)
+	{
+		return string.Format("{0}{1}{2}", BATCH_KEY, batchIndex, IS_IMAGES_KEY);
+	}
 
 	public StimuliSet GetSet()
 	{

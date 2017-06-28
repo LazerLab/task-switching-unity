@@ -210,26 +210,35 @@ public class TSGameController : SingletonController<TSGameController>
 		}
 	}
 
-	TSGamePiece spawnPiece(string stimuli1, string stimuli2)
+	TSGamePiece spawnPiece(StimuliSet set)
 	{
 		toggleAllPiecesVisible(isVisible:false);
 		TSGamePiece piece = choosePieceToSpawn();
 		int pieceIndex = ArrayUtil.IndexOf(boardPieces, piece);
 		this.activeTile = boardTiles[pieceIndex];
-		piece.SetPiece(stimuli1, stimuli2);
+		piece.SetPiece(batch);
 		activeTile.SetPiece(piece);
-		this.currentTask = trackTask(stimuli1, stimuli2, pieceIndex);
+		this.currentTask = trackTask(set, pieceIndex);
 		return piece;
 	}
 
-    TSTaskDescriptor trackTask(string stimuli1, string stimuli2, int stimulusPosition)
+	TSTaskDescriptor trackTask(StimuliSet set, int stimulusPosition)
     {
         TSTaskDescriptor task = new TSTaskDescriptor();
         task.BlockName = data.CurrentBatch.ToString();
         task.StimulusPosition = stimulusPosition;
         task.TaskType = (int) boardTiles[stimulusPosition].GetMatchType + 1;
-		task.Stimuli1Index = data.GetStimuli1Index(stimuli1);
-		task.Stimuli2Index = data.GetStimuli2Index(stimuli2);
+		if(set is ImageStimuliSet)
+		{
+			ImageStimuliSet imageSet = set as ImageStimuliSet;
+			task.Stimuli1Index = data.GetStimuli1Index(imageSet.Stimuli1);
+			task.Stimuli2Index = data.GetStimuli2Index(imageSet.Stimuli2);
+		}
+		else
+		{
+			task.Stimuli1Index = data.GetStimuli1Index(set.Stimuli1);
+			task.Stimuli2Index = data.GetStimuli2Index(set.Stimuli2);
+		}
         task.TypeOfBlock = ((int) data.CurrentBatchIndex) + 1;
         TSTaskType taskType =  data.IsTaskSwitch ? TSTaskType.TaskSwitch : TSTaskType.TaskRepeat;
         task.IsNewTaskSwitch = (int) taskType;
