@@ -25,6 +25,10 @@ namespace VolunteerScience
 			{
 				callback(sprite);
 			}
+			else
+			{
+				Debug.LogErrorFormat("Sprite {0} could not be found", fileName);
+			}
 		}
 
 		#region Singleton Overrides

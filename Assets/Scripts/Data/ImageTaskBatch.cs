@@ -94,10 +94,10 @@ public class ImageTaskBatch : TaskBatch
 	protected override bool shouldRunCallback()
 	{
 		return base.shouldRunCallback() &&
-			sprites[0][0] != null &&
-			sprites[0][1] != null &&
-			sprites[1][0] != null &&
-			sprites[1][1] != null;
+			arrayReady(sprites[0][0]) &&
+			arrayReady(sprites[0][1]) &&
+			arrayReady(sprites[1][0]) &&
+			arrayReady(sprites[1][1]);
 	}
 
 	protected override void runCallback()
@@ -128,6 +128,10 @@ public class ImageTaskBatch : TaskBatch
 		FileLoader.Get.LoadImage(spriteName, delegate(Sprite sprite)
 			{
 				getSpriteArr(stimuliIndex, categoryIndex)[spriteIndex] = sprite;
+				if(sprite == null)
+				{
+					Debug.LogError(spriteName);
+				}
 				checkToRunCallback();
 			});
 	}
@@ -145,6 +149,22 @@ public class ImageTaskBatch : TaskBatch
 	bool sameSprite(Sprite s1, Sprite s2)
 	{
 		return s1 == s2;
+	}
+
+	bool arrayReady(Sprite[] sprites)
+	{
+		if(sprites == null)
+		{
+			return false;
+		}
+		for(int i = 0; i < sprites.Length; i++)
+		{
+			if(sprites[i] == null)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 }
