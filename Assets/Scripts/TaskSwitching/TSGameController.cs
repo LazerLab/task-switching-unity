@@ -87,7 +87,6 @@ public class TSGameController : SingletonController<TSGameController>
     [Header("Debugging")]
     [SerializeField]
     bool verboseMode = true;
-	bool tutorialComplete = false;
 	bool spawningActive = true;
 	TSGamePiece[] boardPieces;
 	TSGameTile[] boardTiles;
@@ -234,13 +233,14 @@ public class TSGameController : SingletonController<TSGameController>
 		if(set is ImageStimuliSet)
 		{
 			ImageStimuliSet imageSet = set as ImageStimuliSet;
-			task.Stimuli1Index = data.GetStimuli1Index(imageSet.Stimuli1);
-			task.Stimuli2Index = data.GetStimuli2Index(imageSet.Stimuli2);
+			ImageTaskBatch imageBatch = batch as ImageTaskBatch;
+			task.Stimuli1Index = imageBatch.GetStimuli1Index(imageSet.Stimuli1);
+			task.Stimuli2Index = imageBatch.GetStimuli2Index(imageSet.Stimuli2);
 		}
 		else
 		{
-			task.Stimuli1Index = data.GetStimuli1Index(set.Stimuli1);
-			task.Stimuli2Index = data.GetStimuli2Index(set.Stimuli2);
+			task.Stimuli1Index = batch.GetStimuli1Index(set.Stimuli1);
+			task.Stimuli2Index = batch.GetStimuli2Index(set.Stimuli2);
 		}
         task.TypeOfBlock = ((int) data.CurrentBatchIndex) + 1;
         TSTaskType taskType =  data.IsTaskSwitch ? TSTaskType.TaskSwitch : TSTaskType.TaskRepeat;

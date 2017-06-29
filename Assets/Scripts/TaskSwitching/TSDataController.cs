@@ -90,26 +90,6 @@ public class TSDataController : SingletonController<TSDataController>
 		return batchCount >= BATCH_COUNT;
 	}
 
-	public int GetStimuli1Index(string stimuli)
-	{
-		return CurrentBatch.GetStimuli1Index(stimuli);
-	}
-
-	public int GetStimuli2Index(string stimuli)
-	{
-		return CurrentBatch.GetStimuli2Index(stimuli);
-	}
-
-	public int GetStimuli1Index(Sprite stimuli)
-	{
-		return (CurrentBatch as ImageTaskBatch).GetStimuli1Index(stimuli);
-	}
-
-	public int GetStimuli2Index(Sprite stimuli)
-	{
-		return (CurrentBatch as ImageTaskBatch).GetStimuli2Index(stimuli);
-	}
-
     protected override void setReferences()
     {
         base.setReferences();
