@@ -86,6 +86,19 @@ public static class ArrayUtil
 		throw new KeyNotFoundException();
 	}
 
+	// Fetches the first index of an array element
+	public static int IndexOf<T>(T[] source, T element, Func<T, T, bool> checkEquality)
+	{
+		for(int i = 0; i < source.Length; i++) 
+		{
+			if(checkEquality(source[i], element))
+			{
+				return i;
+			}
+		}
+		throw new KeyNotFoundException();
+	}
+
 	// Returns an array with the designated element removed
 	public static T Remove<T>(ref T[]source, T element) where T : IComparable
 	{

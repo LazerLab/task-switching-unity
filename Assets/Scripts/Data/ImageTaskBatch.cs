@@ -51,6 +51,17 @@ public class ImageTaskBatch : TaskBatch
 		return ArrayUtil.Contains(sprites[1][1], stimuli, sameSprite);
 	}
 
+	public int GetStimuli1Index(Sprite stimuli)
+	{
+		return ArrayUtil.IndexOf(firstStimuliOptions, stimuli, sameSprite);
+	}
+
+	public int GetStimuli2Index(Sprite stimuli)
+	{
+		return ArrayUtil.IndexOf(secondStimuliOptions, stimuli, sameSprite);
+	}
+
+
 	#region TaskBatch Overrides
 
 	protected override void getFirstStimuliCategory1Options(string[] options)

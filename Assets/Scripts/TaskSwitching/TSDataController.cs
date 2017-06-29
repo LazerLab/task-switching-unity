@@ -100,6 +100,16 @@ public class TSDataController : SingletonController<TSDataController>
 		return CurrentBatch.GetStimuli2Index(stimuli);
 	}
 
+	public int GetStimuli1Index(Sprite stimuli)
+	{
+		return (CurrentBatch as ImageTaskBatch).GetStimuli1Index(stimuli);
+	}
+
+	public int GetStimuli2Index(Sprite stimuli)
+	{
+		return (CurrentBatch as ImageTaskBatch).GetStimuli2Index(stimuli);
+	}
+
     protected override void setReferences()
     {
         base.setReferences();

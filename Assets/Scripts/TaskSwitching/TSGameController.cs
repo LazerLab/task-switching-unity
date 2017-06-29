@@ -156,7 +156,10 @@ public class TSGameController : SingletonController<TSGameController>
 	IEnumerator waitToSpawn()
 	{
 		yield return new WaitUntil(data.AllBatchesProcessed);
-		yield return new WaitUntil(tutorial.TutorialComplete);
+		if(tutorial)
+		{
+			yield return new WaitUntil(tutorial.TutorialComplete);
+		}
 		StartSpawning();
 	}
 
@@ -353,6 +356,18 @@ public class TSGameController : SingletonController<TSGameController>
 	bool isValidPlacement(TSGameTile sourceTile, TSGameTile targetTile)
 	{
 		TSPieceID id = sourceTile.GetPiece.ID;
+		if(id.IsImages)
+		{
+			return isValidPlacementImage(id, batch as ImageTaskBatch, targetTile);
+		}
+		else
+		{
+			return isValidPlacementText(id, batch, targetTile);
+		}
+	}
+
+	bool isValidPlacementText(TSPieceID id, TaskBatch batch, TSGameTile targetTile)
+	{
 		switch(targetTile.GetMatchCondition)
 		{
 			case TSMatchCondition.Stimuli1Category1:
@@ -366,7 +381,23 @@ public class TSGameController : SingletonController<TSGameController>
 			default:
 				return false;
 		}
+	}
 
+	bool isValidPlacementImage(TSPieceID id, ImageTaskBatch batch, TSGameTile targetTile)
+	{
+		switch(targetTile.GetMatchCondition)
+		{
+			case TSMatchCondition.Stimuli1Category1:
+				return batch.IsValidStimuli1Category1(id.Stimuli1Image);
+			case TSMatchCondition.Stimuli1Category2:
+				return batch.IsValidStimuli1Category2(id.Stimuli1Image);
+			case TSMatchCondition.Stimuli2Category1:
+				return batch.IsValidStimuli2Category1(id.Stimuli2Image);
+			case TSMatchCondition.Stimuli2Category2:
+				return batch.IsValidStimuli2Category2(id.Stimuli2Image);
+			default:
+				return false;
+		}
 	}
 
     void handleGameEnd()
@@ -433,7 +464,7 @@ public class TSGameController : SingletonController<TSGameController>
 			leftButton.SetActive();
 			toggleAllTileIcons(visible:false);
 			StimuliSet stimuli = data.GetSet();
-			spawnPiece(stimuli.Stimuli1, stimuli.Stimuli2);
+			spawnPiece(stimuli);
 		}
 	}
 
