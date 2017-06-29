@@ -17,14 +17,7 @@ public class ImageTaskBatch : TaskBatch
 
 	Sprite[][][] sprites;
 
-	public ImageTaskBatch(string batchKey, Action onStimuliFetched) : base(batchKey, onStimuliFetched)
-	{
-		sprites = new Sprite[][][]
-		{
-			new Sprite[2][],
-			new Sprite[2][],
-		};
-	}
+	public ImageTaskBatch(string batchKey, Action onStimuliFetched) : base(batchKey, onStimuliFetched){}
 
 	public new ImageStimuliSet GetSet()
 	{
@@ -63,6 +56,16 @@ public class ImageTaskBatch : TaskBatch
 
 
 	#region TaskBatch Overrides
+
+	protected override void earlyInit()
+	{
+		base.earlyInit();
+		sprites = new Sprite[][][]
+		{
+			new Sprite[2][],
+			new Sprite[2][],
+		};
+	}
 
 	protected override void getFirstStimuliCategory1Options(string[] options)
 	{
@@ -113,7 +116,7 @@ public class ImageTaskBatch : TaskBatch
 
 	void loadSpriteList(string[] spriteNames, int stimuliIndex, int categoryIndex)
 	{
-		sprites[stimuliIndex][stimuliIndex] = new Sprite[spriteNames.Length];
+		sprites[stimuliIndex][categoryIndex] = new Sprite[spriteNames.Length];
 		for(int i = 0; i < spriteNames.Length; i++)
 		{
 			loadSpriteIntoArr(spriteNames[i], stimuliIndex, categoryIndex, i);
@@ -136,7 +139,7 @@ public class ImageTaskBatch : TaskBatch
 
 	Sprite randomStimuli2Sprite()
 	{
-		return secondStimuliOptions[UnityEngine.Random.Range(0, firstStimuliOptions.Length)];
+		return secondStimuliOptions[UnityEngine.Random.Range(0, secondStimuliOptions.Length)];
 	}
 
 	bool sameSprite(Sprite s1, Sprite s2)

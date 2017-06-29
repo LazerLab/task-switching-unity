@@ -16,7 +16,7 @@ namespace VolunteerScience
         VSVariable[] variables;
         Dictionary<string, VSVariable> variableLookup;
 
-        #region Single Overrides
+        #region Singleton Overrides
 
         protected override void Awake()
         {

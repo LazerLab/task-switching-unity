@@ -17,10 +17,21 @@ namespace VolunteerScience
 
 		public void LoadImage(string fileName, Action<Sprite> callback)
 		{
+			#if UNITY_EDITOR
+
+			if(SpriteStoreSimulator.HasInstance)
+			{
+				SpriteStoreSimulator.Get.LoadImage(fileName, callback);
+			}
+
+			#else
+
 			GetFileURL(fileName, delegate(string fileURL)
 				{
 					StartCoroutine(loadTexture(fileURL, callback));
 				});
+
+			#endif
 		}
 
 		public StringFetchAction GetFileURL(string fileName, Action<string> callback)

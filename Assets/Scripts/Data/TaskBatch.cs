@@ -40,6 +40,7 @@ public class TaskBatch
 
 	public TaskBatch(string batchKey, Action onStimuliFetched)
 	{
+		earlyInit();
 		this.batchKey = batchKey;
 		this.onStimuliFetched = onStimuliFetched;
 		this.fetcher = VariableFetcher.Get;
@@ -81,6 +82,11 @@ public class TaskBatch
 		return ArrayUtil.Contains(secondStimuliCategory2Options, stimuli);
 	}
 
+	protected virtual void earlyInit()
+	{
+		// NOTHING
+	}
+
 	string randomStimuli1()
 	{
 		return firstStimuliOptions[UnityEngine.Random.Range(0, firstStimuliOptions.Length)];
@@ -90,7 +96,7 @@ public class TaskBatch
 	{
 		return secondStimuliOptions[UnityEngine.Random.Range(0, secondStimuliOptions.Length)];
 	}
-
+		
 	void getStimuliNames(string[] names)
 	{
 		FirstStimuli = names[0];
