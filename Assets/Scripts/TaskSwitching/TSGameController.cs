@@ -416,15 +416,22 @@ public class TSGameController : SingletonController<TSGameController>
 		while(this.spawningActive)
 		{
 			yield return new WaitForSeconds(spawnDelay);
+			TSGameTile previousTile = activeTile;
+			bool tooSlow = false;
             if(hasCurrentTask)
             {
                 sendTask(currentTask, TSResponseStatus.TooSlow, 0, 0);
+				tooSlow = true;
             }
             rightButton.SetActive();
 			leftButton.SetActive();
 			toggleAllTileIcons(visible:false);
 			StimuliSet stimuli = data.GetSet();
 			spawnPiece(stimuli.Stimuli1, stimuli.Stimuli2);
+			if(tooSlow && previousTile)
+			{
+				previousTile.TimedShowIcon(successfulPlacement:false);
+			}
 		}
 	}
 
