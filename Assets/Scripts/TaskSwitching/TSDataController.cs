@@ -121,16 +121,18 @@ public class TSDataController : SingletonController<TSDataController>
 		batches = new TaskBatch[BATCH_COUNT];
 		for(int i = START_BATCH; i <= BATCH_COUNT; i++)
 		{
-			fetch.GetBool(getImageCheckKey(i), delegate(bool isImages)
+			int batchNum = i;
+			int batchIndex = batchNum - 1;
+			fetch.GetBool(getImageCheckKey(batchNum), delegate(bool isImages)
 				{
-					string batchName = string.Format("{0}{1}", BATCH_KEY, i);
+					string batchName = string.Format("{0}{1}", BATCH_KEY, batchNum);
 					if(isImages)
 					{
-						batches[i - 1] = new ImageTaskBatch(batchName, processBatch);
+						batches[batchIndex] = new ImageTaskBatch(batchName, processBatch);
 					}
 					else
 					{
-						batches[i - 1] = new TaskBatch(batchName, processBatch);
+						batches[batchIndex] = new TaskBatch(batchName, processBatch);
 					}
 				});
 		}
