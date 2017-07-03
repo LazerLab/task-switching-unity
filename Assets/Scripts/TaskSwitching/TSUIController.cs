@@ -13,10 +13,18 @@ public class TSUIController : SingletonController<TSUIController>
 	GameObject completeMessage;
 
 	[SerializeField]
-	Text stimuli1Category1, stimuli1Category2, stimuli2Category1, stimuli2Category2;
+	Text stimuli1Category1;
+	[SerializeField]
+	Text stimuli1Category2;
+	[SerializeField]
+	Text stimuli2Category1;
+	[SerializeField]
+	Text stimuli2Category2;
 
 	[SerializeField]
-	Text[] stimuli1, stimuli2;
+	Text[] stimuli1;
+	[SerializeField]
+	Text[] stimuli2;
 
 	public void SetLabels(TaskBatch batch)
 	{

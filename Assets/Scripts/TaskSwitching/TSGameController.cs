@@ -87,7 +87,6 @@ public class TSGameController : SingletonController<TSGameController>
     [Header("Debugging")]
     [SerializeField]
     bool verboseMode = true;
-	bool tutorialComplete = false;
 	bool spawningActive = true;
 	TSGamePiece[] boardPieces;
 	TSGameTile[] boardTiles;
@@ -156,7 +155,10 @@ public class TSGameController : SingletonController<TSGameController>
 	IEnumerator waitToSpawn()
 	{
 		yield return new WaitUntil(data.AllBatchesProcessed);
-		yield return new WaitUntil(tutorial.TutorialComplete);
+		if(tutorial)
+		{
+			yield return new WaitUntil(tutorial.TutorialComplete);
+		}
 		StartSpawning();
 	}
 
@@ -210,26 +212,36 @@ public class TSGameController : SingletonController<TSGameController>
 		}
 	}
 
-	TSGamePiece spawnPiece(string stimuli1, string stimuli2)
+	TSGamePiece spawnPiece(StimuliSet set)
 	{
 		toggleAllPiecesVisible(isVisible:false);
 		TSGamePiece piece = choosePieceToSpawn();
 		int pieceIndex = ArrayUtil.IndexOf(boardPieces, piece);
 		this.activeTile = boardTiles[pieceIndex];
-		piece.SetPiece(stimuli1, stimuli2);
+		piece.SetPiece(batch);
 		activeTile.SetPiece(piece);
-		this.currentTask = trackTask(stimuli1, stimuli2, pieceIndex);
+		this.currentTask = trackTask(set, pieceIndex);
 		return piece;
 	}
 
-    TSTaskDescriptor trackTask(string stimuli1, string stimuli2, int stimulusPosition)
+	TSTaskDescriptor trackTask(StimuliSet set, int stimulusPosition)
     {
         TSTaskDescriptor task = new TSTaskDescriptor();
         task.BlockName = data.CurrentBatch.ToString();
         task.StimulusPosition = stimulusPosition;
         task.TaskType = (int) boardTiles[stimulusPosition].GetMatchType + 1;
-		task.Stimuli1Index = data.GetStimuli1Index(stimuli1);
-		task.Stimuli2Index = data.GetStimuli2Index(stimuli2);
+		if(set is ImageStimuliSet)
+		{
+			ImageStimuliSet imageSet = set as ImageStimuliSet;
+			ImageTaskBatch imageBatch = batch as ImageTaskBatch;
+			task.Stimuli1Index = imageBatch.GetStimuli1Index(imageSet.Stimuli1);
+			task.Stimuli2Index = imageBatch.GetStimuli2Index(imageSet.Stimuli2);
+		}
+		else
+		{
+			task.Stimuli1Index = batch.GetStimuli1Index(set.Stimuli1);
+			task.Stimuli2Index = batch.GetStimuli2Index(set.Stimuli2);
+		}
         task.TypeOfBlock = ((int) data.CurrentBatchIndex) + 1;
         TSTaskType taskType =  data.IsTaskSwitch ? TSTaskType.TaskSwitch : TSTaskType.TaskRepeat;
         task.IsNewTaskSwitch = (int) taskType;
@@ -344,6 +356,18 @@ public class TSGameController : SingletonController<TSGameController>
 	bool isValidPlacement(TSGameTile sourceTile, TSGameTile targetTile)
 	{
 		TSPieceID id = sourceTile.GetPiece.ID;
+		if(id.IsImages)
+		{
+			return isValidPlacementImage(id, batch as ImageTaskBatch, targetTile);
+		}
+		else
+		{
+			return isValidPlacementText(id, batch, targetTile);
+		}
+	}
+
+	bool isValidPlacementText(TSPieceID id, TaskBatch batch, TSGameTile targetTile)
+	{
 		switch(targetTile.GetMatchCondition)
 		{
 			case TSMatchCondition.Stimuli1Category1:
@@ -357,7 +381,23 @@ public class TSGameController : SingletonController<TSGameController>
 			default:
 				return false;
 		}
+	}
 
+	bool isValidPlacementImage(TSPieceID id, ImageTaskBatch batch, TSGameTile targetTile)
+	{
+		switch(targetTile.GetMatchCondition)
+		{
+			case TSMatchCondition.Stimuli1Category1:
+				return batch.IsValidStimuli1Category1(id.Stimuli1Image);
+			case TSMatchCondition.Stimuli1Category2:
+				return batch.IsValidStimuli1Category2(id.Stimuli1Image);
+			case TSMatchCondition.Stimuli2Category1:
+				return batch.IsValidStimuli2Category1(id.Stimuli2Image);
+			case TSMatchCondition.Stimuli2Category2:
+				return batch.IsValidStimuli2Category2(id.Stimuli2Image);
+			default:
+				return false;
+		}
 	}
 
     void handleGameEnd()
@@ -427,7 +467,7 @@ public class TSGameController : SingletonController<TSGameController>
 			leftButton.SetActive();
 			toggleAllTileIcons(visible:false);
 			StimuliSet stimuli = data.GetSet();
-			spawnPiece(stimuli.Stimuli1, stimuli.Stimuli2);
+			spawnPiece(stimuli);
 			if(tooSlow && previousTile)
 			{
 				previousTile.TimedShowIcon(successfulPlacement:false);
