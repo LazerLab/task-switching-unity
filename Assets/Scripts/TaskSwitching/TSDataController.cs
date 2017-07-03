@@ -64,10 +64,7 @@ public class TSDataController : SingletonController<TSDataController>
         }
     }
 
-    #region Tunable Variables
-
-    [SerializeField]
-	int numTasksPerBatch = 10;
+	#region Tunable Variables
 
     [SerializeField]
     string experimentName = "Task Switching";
@@ -84,6 +81,7 @@ public class TSDataController : SingletonController<TSDataController>
 	TaskBatch[] batches;
 	int batchCount = 0;
 	int randomBatch;
+	int numTasksPerBatch = 10;
 
 	public bool AllBatchesProcessed()
 	{

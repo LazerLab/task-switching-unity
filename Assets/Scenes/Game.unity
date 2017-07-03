@@ -143,7 +143,7 @@ Prefab:
     - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
         type: 2}
       propertyPath: sprites.Array.size
-      value: 58
+      value: 81
       objectReference: {fileID: 0}
     - target: {fileID: 4254378835038102, guid: 2b2e844819d3a4b5cab738af7538b5fc, type: 2}
       propertyPath: m_LocalPosition.x
@@ -524,6 +524,144 @@ Prefab:
       propertyPath: sprites.Array.data[57]
       value: 
       objectReference: {fileID: 21300000, guid: 7687149643868442db22e0d564c8dd57,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[58]
+      value: 
+      objectReference: {fileID: 21300000, guid: bb96c415b96f74ba89e2851fbec39379,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[59]
+      value: 
+      objectReference: {fileID: 21300000, guid: f13baebdb11fe4a36a4dc69d2df23c54,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[60]
+      value: 
+      objectReference: {fileID: 21300000, guid: aff290a67a77647028795e788bfe5053,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[61]
+      value: 
+      objectReference: {fileID: 21300000, guid: 5a219ea9fc32b43fba4676d623178674,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[62]
+      value: 
+      objectReference: {fileID: 21300000, guid: 0556d25137f6a40248447b7c4cf87452,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[63]
+      value: 
+      objectReference: {fileID: 21300000, guid: 0556d25137f6a40248447b7c4cf87452,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[64]
+      value: 
+      objectReference: {fileID: 21300000, guid: 25ac194749cd14a7aae7115b4794fc1b,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[65]
+      value: 
+      objectReference: {fileID: 21300000, guid: 247811702630c4352a84a06c5fb0eae5,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[66]
+      value: 
+      objectReference: {fileID: 21300000, guid: d478eba068d04472bb07f550c2fba88c,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[67]
+      value: 
+      objectReference: {fileID: 21300000, guid: 219ea100184674f4caca954a5fe904e5,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[68]
+      value: 
+      objectReference: {fileID: 21300000, guid: 08f9c11ebfb994beabd831e9799c91b1,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[69]
+      value: 
+      objectReference: {fileID: 21300000, guid: fc0fc2ff4e36e47b68e4a0177d048f82,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[70]
+      value: 
+      objectReference: {fileID: 21300000, guid: c35f0784cbc9a4b718ca60758ebcd7d1,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[71]
+      value: 
+      objectReference: {fileID: 21300000, guid: 32fa8faccb7684338abb68fe285e3f52,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[72]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1ea4c27df409c4a9e93f48a46500e598,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[73]
+      value: 
+      objectReference: {fileID: 21300000, guid: 4e332b3d297a646f6a33e6ecc205a9e4,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[74]
+      value: 
+      objectReference: {fileID: 21300000, guid: c921287f189bd475b83841aade0b9439,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[75]
+      value: 
+      objectReference: {fileID: 21300000, guid: dcf00cbe23d42476a845dc507a6aa770,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[76]
+      value: 
+      objectReference: {fileID: 21300000, guid: 9b8a995eac55143dbb94491a3194ea81,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[77]
+      value: 
+      objectReference: {fileID: 21300000, guid: 050fc279d25ad45eeb21ba9fd71ecfb4,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[78]
+      value: 
+      objectReference: {fileID: 21300000, guid: 45f33b9f4fcf44e0dba9ddcade8e50e5,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[79]
+      value: 
+      objectReference: {fileID: 21300000, guid: d317d52ddaafc4f64a1640833142725d,
+        type: 3}
+    - target: {fileID: 114651817271463138, guid: 2b2e844819d3a4b5cab738af7538b5fc,
+        type: 2}
+      propertyPath: sprites.Array.data[80]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1c95869c68d2648b593eea1cd956e04d,
         type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2b2e844819d3a4b5cab738af7538b5fc, type: 2}
@@ -1197,7 +1335,7 @@ Prefab:
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}
       propertyPath: variables.Array.data[7].value
-      value: Living Presidents, Dead Presidents
+      value: Races, Presidents
       objectReference: {fileID: 0}
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}
@@ -1248,12 +1386,17 @@ Prefab:
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}
       propertyPath: variables.Array.data[12].value
-      value: Bill Clinton, Barack Obama
+      value: clinton1, clinton2, clinton3, clinton4, clinton5, clinton6, kennedy1,
+        kennedy2, kennedy3, kennedy4, kennedy5, kennedy6
       objectReference: {fileID: 0}
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}
       propertyPath: variables.Array.data[13].value
-      value: George W Bush, Donald Trump
+      value: bush1, bush2, bush3, bush4, bush5, bush6, jefferson1, jefferson2, jefferson3,
+        jefferson4, jefferson5, jefferson6, lincolnp1, lincolnp2, lincolnp3, lincolnp4,
+        lincolnp5, lincolnp6, nixon1, nixon2, nixon3, nixon4, nixon5, nixon6, reagan1,
+        reagan2, reagan3, reagan4, reagan5, reagan6, roosevelt1, roosevelt2, roosevelt3,
+        roosevelt4, roosevelt5, roosevelt6
       objectReference: {fileID: 0}
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}
@@ -1439,32 +1582,34 @@ Prefab:
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}
       propertyPath: variables.Array.data[32].key
-      value: Living Presidents
+      value: Races
       objectReference: {fileID: 0}
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}
       propertyPath: variables.Array.data[32].value
-      value: Bill Clinton, George Bush
+      value: African American, Caucasian
       objectReference: {fileID: 0}
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}
       propertyPath: variables.Array.data[33].key
-      value: Bill Clinton
+      value: African American
       objectReference: {fileID: 0}
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}
       propertyPath: variables.Array.data[33].value
-      value: clinton1, clinton2, clinton3, clinton4, clinton5, clinton6
+      value: black1, black10, black11, black2, black3, black4, black5, black6, black7,
+        black8, black9
       objectReference: {fileID: 0}
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}
       propertyPath: variables.Array.data[34].key
-      value: George Bush
+      value: Caucasian
       objectReference: {fileID: 0}
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}
       propertyPath: variables.Array.data[34].value
-      value: bush1, bush2, bush3, bush4, bush5, bush6, bush6
+      value: white1, white10, white11, white2, white3, white4, white5, white6, white7,
+        white8, white9
       objectReference: {fileID: 0}
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}
