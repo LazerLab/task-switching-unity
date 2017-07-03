@@ -13,6 +13,7 @@ using VolunteerScience;
 public class TSDataController : SingletonController<TSDataController> 
 {
 	const string BATCH_KEY = "batch";
+	const string IS_IMAGES_KEY = "IsImages";
 	const string TASKS_PER_BATCH = "tasksPerBatch";
 
 	const int START_BATCH = 1;
@@ -63,10 +64,7 @@ public class TSDataController : SingletonController<TSDataController>
         }
     }
 
-    #region Tunable Variables
-
-    [SerializeField]
-	int numTasksPerBatch = 10;
+	#region Tunable Variables
 
     [SerializeField]
     string experimentName = "Task Switching";
@@ -83,20 +81,11 @@ public class TSDataController : SingletonController<TSDataController>
 	TaskBatch[] batches;
 	int batchCount = 0;
 	int randomBatch;
+	int numTasksPerBatch = 10;
 
 	public bool AllBatchesProcessed()
 	{
 		return batchCount >= BATCH_COUNT;
-	}
-
-	public int GetStimuli1Index(string stimuli)
-	{
-		return CurrentBatch.GetStimuli1Index(stimuli);
-	}
-
-	public int GetStimuli2Index(string stimuli)
-	{
-		return CurrentBatch.GetStimuli2Index(stimuli);
 	}
 
     protected override void setReferences()
@@ -121,17 +110,29 @@ public class TSDataController : SingletonController<TSDataController>
 			TASKS_PER_BATCH,
 			delegate(int numTasks)
 			{
-				this.numTasksPerBatch = numTasks;	
+				this.numTasksPerBatch = numTasks;
 			}
 		);
 	}
 		
 	void createBatches()
 	{
+		VariableFetcher fetch = VariableFetcher.Get;
 		batches = new TaskBatch[BATCH_COUNT];
 		for(int i = START_BATCH; i <= BATCH_COUNT; i++)
 		{
-			batches[i - 1] = new TaskBatch(string.Format("{0}{1}", BATCH_KEY, i), processBatch);
+			fetch.GetBool(getImageCheckKey(i), delegate(bool isImages)
+				{
+					string batchName = string.Format("{0}{1}", BATCH_KEY, i);
+					if(isImages)
+					{
+						batches[i - 1] = new ImageTaskBatch(batchName, processBatch);
+					}
+					else
+					{
+						batches[i - 1] = new TaskBatch(batchName, processBatch);
+					}
+				});
 		}
 		randomBatch = UnityEngine.Random.Range(0, BATCH_COUNT);
 	}
@@ -158,6 +159,11 @@ public class TSDataController : SingletonController<TSDataController>
         game.CompletedTasks = new List<TSTaskDescriptor>();
         return game;
     }
+
+	string getImageCheckKey(int batchIndex)
+	{
+		return string.Format("{0}{1}{2}", BATCH_KEY, batchIndex, IS_IMAGES_KEY);
+	}
 
 	public StimuliSet GetSet()
 	{
