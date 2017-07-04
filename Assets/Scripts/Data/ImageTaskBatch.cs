@@ -19,7 +19,7 @@ public class ImageTaskBatch : TaskBatch
 
 	public ImageTaskBatch(string batchKey, Action onStimuliFetched) : base(batchKey, onStimuliFetched){}
 
-	public new ImageStimuliSet GetSet()
+	public override StimuliSet GetSet()
 	{
 		return new ImageStimuliSet(randomStimuli1Sprite(), randomStimuli2Sprite());
 	}
@@ -171,13 +171,31 @@ public class ImageTaskBatch : TaskBatch
 
 public class ImageStimuliSet : StimuliSet
 {
-	public new Sprite Stimuli1;
-	public new Sprite Stimuli2;
+	public Sprite Stimuli1Img;
+	public Sprite Stimuli2Img;
+
+	public bool HasImage1
+	{
+		get
+		{
+			return Stimuli1Img != null;
+		}
+	}
+
+	public bool HasImage2
+	{
+		get
+		{
+			return Stimuli2Img != null;
+		}
+	}
 
 	public ImageStimuliSet(Sprite stimuli1, Sprite stimuli2) : base()
 	{
-		this.Stimuli1 = stimuli1;
-		this.Stimuli2 = stimuli2;
+		this.Stimuli1Img = stimuli1;
+		this.Stimuli2Img = stimuli2;
 	}
+		
+	public ImageStimuliSet(){}
 
 }

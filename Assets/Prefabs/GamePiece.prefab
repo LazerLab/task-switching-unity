@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 222838476757386910}
   - component: {fileID: 114293576692950974}
   m_Layer: 5
-  m_Name: Stimuli2
+  m_Name: Stimuli2Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 222777127035967948}
   - component: {fileID: 114566371236295820}
   m_Layer: 5
-  m_Name: Stimuli1
+  m_Name: Stimuli1Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -273,8 +273,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preserveOnSceneChange: 0
   allVisuals: {fileID: 1300425547568924}
-  letterField: {fileID: 114566371236295820}
-  numberField: {fileID: 114293576692950974}
+  stimuli1TextDisplay: {fileID: 114566371236295820}
+  stimuli2TextDisplay: {fileID: 114293576692950974}
   stimuli1ImageDisplay: {fileID: 114619198577255552}
   stimuli2ImageDisplay: {fileID: 114741879336633984}
 --- !u!222 &222047428262803544
