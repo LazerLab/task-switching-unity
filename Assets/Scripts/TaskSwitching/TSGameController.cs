@@ -230,12 +230,33 @@ public class TSGameController : SingletonController<TSGameController>
         task.BlockName = data.CurrentBatch.ToString();
         task.StimulusPosition = stimulusPosition;
         task.TaskType = (int) boardTiles[stimulusPosition].GetMatchType + 1;
-		if(set is ImageStimuliSet)
+		if(batch is HybridTaskBatch)
+		{
+			ImageStimuliSet imageSet = set as ImageStimuliSet;
+			HybridTaskBatch hybridBatch = batch as HybridTaskBatch;
+			if(imageSet.HasImage1)
+			{
+				task.Stimuli1Index = hybridBatch.GetStimuli1Index(imageSet.Stimuli1Img);
+			}
+			else
+			{
+				task.Stimuli1Index = hybridBatch.GetStimuli1Index(imageSet.Stimuli1);
+			}
+			if(imageSet.HasImage2)
+			{
+				task.Stimuli2Index = hybridBatch.GetStimuli2Index(imageSet.Stimuli2Img);
+			}
+			else
+			{
+				task.Stimuli2Index = hybridBatch.GetStimuli2Index(imageSet.Stimuli2Img);
+			}
+		}
+		else if(set is ImageStimuliSet)
 		{
 			ImageStimuliSet imageSet = set as ImageStimuliSet;
 			ImageTaskBatch imageBatch = batch as ImageTaskBatch;
-			task.Stimuli1Index = imageBatch.GetStimuli1Index(imageSet.Stimuli1);
-			task.Stimuli2Index = imageBatch.GetStimuli2Index(imageSet.Stimuli2);
+			task.Stimuli1Index = imageBatch.GetStimuli1Index(imageSet.Stimuli1Img);
+			task.Stimuli2Index = imageBatch.GetStimuli2Index(imageSet.Stimuli2Img);
 		}
 		else
 		{
@@ -356,13 +377,62 @@ public class TSGameController : SingletonController<TSGameController>
 	bool isValidPlacement(TSGameTile sourceTile, TSGameTile targetTile)
 	{
 		TSPieceID id = sourceTile.GetPiece.ID;
-		if(id.IsImages)
+		if(id.IsHybrid)
+		{
+			return isValidPlacementHybrid(id, batch as HybridTaskBatch, targetTile);	
+		}
+		else if(id.IsImages)
 		{
 			return isValidPlacementImage(id, batch as ImageTaskBatch, targetTile);
 		}
 		else
 		{
 			return isValidPlacementText(id, batch, targetTile);
+		}
+	}
+
+	bool isValidPlacementHybrid(TSPieceID id, HybridTaskBatch hybridBatch, TSGameTile targetTile)
+	{
+		switch(targetTile.GetMatchCondition)
+		{
+			case TSMatchCondition.Stimuli1Category1:
+				if(id.Stimuli1Image == null)
+				{
+					return hybridBatch.IsValidStimuli1Category1(id.Stimuli1);
+				}
+				else
+				{
+					return hybridBatch.IsValidStimuli1Category1(id.Stimuli1Image);
+				}
+			case TSMatchCondition.Stimuli1Category2:
+				if(id.Stimuli1Image == null)
+				{
+					return hybridBatch.IsValidStimuli1Category2(id.Stimuli1);
+				}
+				else
+				{
+					return hybridBatch.IsValidStimuli1Category2(id.Stimuli1Image);
+				}
+			case TSMatchCondition.Stimuli2Category1:
+				if(id.Stimuli2Image == null)
+				{
+					return hybridBatch.IsValidStimuli2Category1(id.Stimuli2);
+				}
+				else
+				{
+					return hybridBatch.IsValidStimuli2Category1(id.Stimuli2Image);
+				}
+			case TSMatchCondition.Stimuli2Category2:
+				if(id.Stimuli2Image == null)
+				{
+					return hybridBatch.IsValidStimuli2Category2(id.Stimuli2);
+				}
+				else
+				{
+					return hybridBatch.IsValidStimuli2Category2(id.Stimuli2Image);
+				}
+			default:
+				return false;
 		}
 	}
 

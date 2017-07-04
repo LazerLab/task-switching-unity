@@ -17,7 +17,8 @@ public class TSDataController : SingletonController<TSDataController>
 	const string TASKS_PER_BATCH = "tasksPerBatch";
 
 	const int START_BATCH = 1;
-	const int BATCH_COUNT = 3;
+	const int STANDARD_BATCH_COUNT = 3;
+	const int HYBRID_BATCH_COUNT = 1;
 
     public int CurrentBatchIndex
     {
@@ -85,7 +86,7 @@ public class TSDataController : SingletonController<TSDataController>
 
 	public bool AllBatchesProcessed()
 	{
-		return batchCount >= BATCH_COUNT;
+		return batchCount >= STANDARD_BATCH_COUNT;
 	}
 
     protected override void setReferences()
@@ -118,8 +119,8 @@ public class TSDataController : SingletonController<TSDataController>
 	void createBatches()
 	{
 		VariableFetcher fetch = VariableFetcher.Get;
-		batches = new TaskBatch[BATCH_COUNT];
-		for(int i = START_BATCH; i <= BATCH_COUNT; i++)
+		batches = new TaskBatch[STANDARD_BATCH_COUNT + HYBRID_BATCH_COUNT];
+		for(int i = START_BATCH; i <= STANDARD_BATCH_COUNT; i++)
 		{
 			int batchNum = i;
 			int batchIndex = batchNum - 1;
@@ -134,9 +135,10 @@ public class TSDataController : SingletonController<TSDataController>
 					{
 						batches[batchIndex] = new TaskBatch(batchName, processBatch);
 					}
+					postProcessBatch();
 				});
 		}
-		randomBatch = UnityEngine.Random.Range(0, BATCH_COUNT);
+		randomBatch = UnityEngine.Random.Range(0, STANDARD_BATCH_COUNT);
 	}
 
 	void processBatch()
@@ -149,7 +151,30 @@ public class TSDataController : SingletonController<TSDataController>
 		if(AllBatchesProcessed())
 		{
 			ui.SetLabels(CurrentBatch);
+		
 		}
+	}
+
+	void postProcessBatch()
+	{
+		if(AllBatchesProcessed())
+		{
+			generateHybridBatches();
+		}
+	}
+
+	void generateHybridBatches()
+	{
+		for(int i = STANDARD_BATCH_COUNT; i < batches.Length; i++)
+		{
+			batches[i] = new HybridTaskBatch(randomStandardBatch(), randomStandardBatch());
+		}
+	}
+
+	TaskBatch randomStandardBatch()
+	{
+		int batchIndex = UnityEngine.Random.Range(0, STANDARD_BATCH_COUNT);
+		return batches[batchIndex];
 	}
 
     TSGameState getNewGame()
@@ -253,7 +278,7 @@ public class TSDataController : SingletonController<TSDataController>
     int getNumModes()
     {
 		// Extra random batch at end
-		return BATCH_COUNT + 1;
+		return STANDARD_BATCH_COUNT + 1;
     }
 
 }

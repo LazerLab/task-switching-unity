@@ -685,6 +685,48 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 81a59065cb9bf4270aa98a543421d0b1, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &759955870
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4081588239219630, guid: 7fa151ce45409492a99efb73d945f9d8, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081588239219630, guid: 7fa151ce45409492a99efb73d945f9d8, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081588239219630, guid: 7fa151ce45409492a99efb73d945f9d8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081588239219630, guid: 7fa151ce45409492a99efb73d945f9d8, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081588239219630, guid: 7fa151ce45409492a99efb73d945f9d8, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081588239219630, guid: 7fa151ce45409492a99efb73d945f9d8, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081588239219630, guid: 7fa151ce45409492a99efb73d945f9d8, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081588239219630, guid: 7fa151ce45409492a99efb73d945f9d8, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 7fa151ce45409492a99efb73d945f9d8, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1057219124
 Prefab:
   m_ObjectHideFlags: 0
@@ -1019,7 +1061,7 @@ Prefab:
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}
       propertyPath: variables.Array.data[28].value
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114748781832955484, guid: 9a6533a3418cb469caa91121e39d3fea,
         type: 2}

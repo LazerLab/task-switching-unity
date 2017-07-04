@@ -25,10 +25,59 @@ public class TaskBatch
 	#endregion
 
 	string batchKey;
-	public string FirstStimuli;
-	public string SecondStimuli;
-	public string FirstStimuliCategory1, FirstStimuliCategory2;
-	public string SecondStimuliCategory1, SecondStimuliCategory2;
+	public virtual string FirstStimuli
+	{
+		get
+		{
+			return _firstStimuli;
+		}
+	}
+
+	public virtual string SecondStimuli
+	{
+		get
+		{
+			return _secondStimuli;
+		}
+	}
+
+	public virtual string FirstStimuliCategory1
+	{
+		get
+		{
+			return _firstStimuliCategory1;
+		}
+	}
+
+	public virtual string FirstStimuliCategory2
+	{
+		get
+		{
+			return _firstStimuliCategory2;
+		}
+	}
+
+	public virtual string SecondStimuliCategory1
+	{
+		get
+		{
+			return _secondStimuliCategory1;
+		}
+	}
+
+	public virtual string SecondStimuliCategory2
+	{
+		get
+		{
+			return _secondStimuliCategory2;
+		}
+	}
+
+	string _firstStimuli;
+	string _secondStimuli;
+	string _firstStimuliCategory1, _firstStimuliCategory2;
+	string _secondStimuliCategory1, _secondStimuliCategory2;
+
 	string[] firstStimuliCategory1Options, firstStimuliCategory2Options;
 	string[] secondStimuliCategory1Options, secondStimuliCategory2Options;
 	string[] firstStimuliOptions;
@@ -47,37 +96,40 @@ public class TaskBatch
 		fetcher.GetValueList(batchKey, getStimuliNames);
 	}
 
-	public StimuliSet GetSet()
+	// Empty constructor for use by subclasses
+	protected TaskBatch(){}
+
+	public virtual StimuliSet GetSet()
 	{
 		return new StimuliSet(randomStimuli1(), randomStimuli2());
 	}
 
-	public int GetStimuli1Index(string stimuli)
+	public virtual int GetStimuli1Index(string stimuli)
 	{
 		return ArrayUtil.IndexOf(firstStimuliOptions, stimuli);
 	}
 
-	public int GetStimuli2Index(string stimuli)
+	public virtual int GetStimuli2Index(string stimuli)
 	{
 		return ArrayUtil.IndexOf(secondStimuliOptions, stimuli);
 	}
 
-	public bool IsValidStimuli1Category1(string stimuli)
+	public virtual bool IsValidStimuli1Category1(string stimuli)
 	{
 		return ArrayUtil.Contains(firstStimuliCategory1Options, stimuli);
 	}
 
-	public bool IsValidStimuli1Category2(string stimuli)
+	public virtual bool IsValidStimuli1Category2(string stimuli)
 	{
 		return ArrayUtil.Contains(firstStimuliCategory2Options, stimuli);
 	}
 
-	public bool IsValidStimuli2Category1(string stimuli)
+	public virtual bool IsValidStimuli2Category1(string stimuli)
 	{
 		return ArrayUtil.Contains(secondStimuliCategory1Options, stimuli);
 	}
 
-	public bool IsValidStimuli2Category2(string stimuli)
+	public virtual bool IsValidStimuli2Category2(string stimuli)
 	{
 		return ArrayUtil.Contains(secondStimuliCategory2Options, stimuli);
 	}
@@ -99,24 +151,24 @@ public class TaskBatch
 		
 	void getStimuliNames(string[] names)
 	{
-		FirstStimuli = names[0];
-		SecondStimuli = names[1];
+		_firstStimuli = names[0];
+		_secondStimuli = names[1];
 		fetcher.GetValueList(FirstStimuli, getFirstStimuliCategories);
 		fetcher.GetValueList(SecondStimuli, getSecondStimuliCategories);
 	}
 
 	void getFirstStimuliCategories(string[] categories)
 	{
-		FirstStimuliCategory1 = categories[0];
-		FirstStimuliCategory2 = categories[1];
+		_firstStimuliCategory1 = categories[0];
+		_firstStimuliCategory2 = categories[1];
 		fetcher.GetValueList(FirstStimuliCategory1, getFirstStimuliCategory1Options);
 		fetcher.GetValueList(FirstStimuliCategory2, getFirstStimuliCategory2Options);
 	}
 
 	void getSecondStimuliCategories(string[] categories)
 	{
-		SecondStimuliCategory1 = categories[0];
-		SecondStimuliCategory2 = categories[1];
+		_secondStimuliCategory1 = categories[0];
+		_secondStimuliCategory2 = categories[1];
 		fetcher.GetValueList(SecondStimuliCategory1, getSecondStimuliCategory1Options);
 		fetcher.GetValueList(SecondStimuliCategory2, getSecondStimuliCategory2Options);
 	}
