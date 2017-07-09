@@ -12,9 +12,9 @@
 6. Create a new variable for each stimuli with a matching name, and provide two categories for that stimuli (e.g. "Democrat, Republican")
 7. Create a new variable for each category with the corresponding values separated by commas
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp 7.a. If the stimuli is text, write each text option
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.a. If the stimuli is text, write each text option
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp 7.b. If the stimuli is images, write each filename (including file extension e.g. ".png")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.b. If the stimuli is images, write each filename (including file extension e.g. ".png")
 
 8. If any of the stimuli are images, go to the "Manage Files" tab
 9. To upload a new image, scroll down to "Add New File" header
