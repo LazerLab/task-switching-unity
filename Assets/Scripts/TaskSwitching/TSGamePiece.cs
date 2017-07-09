@@ -73,7 +73,7 @@ public class TSGamePiece : TSGameObject
 		}
 		if(set.HasImage1 && set.HasImage2)
 		{
-			this.ID = new TSPieceID(set.Stimuli1Img, set.Stimuli2Img);
+			this.ID = new TSPieceID(set.Stimuli1Img, set.Stimuli2Img, isHybrid:true);
 		}
 		else if(set.HasImage1 && !set.HasImage2)
 		{
@@ -85,7 +85,7 @@ public class TSGamePiece : TSGameObject
 		}
 		else
 		{
-			this.ID = new TSPieceID(set.Stimuli1, set.Stimuli2);
+			this.ID = new TSPieceID(set.Stimuli1, set.Stimuli2, isHybrid:true);
 		}
 	}
 
@@ -191,11 +191,25 @@ public class TSPieceID
 		this.IsImages = false;
 	}
 
+	public TSPieceID(string stimuli1, string stimuli2, bool isHybrid)
+	{
+		this.Stimuli1 = stimuli1;
+		this.Stimuli2 = stimuli2;
+		this.IsHybrid = isHybrid;
+	}
+
 	public TSPieceID(Sprite stimuli1, Sprite stimuli2)
 	{
 		this.Stimuli1Image = stimuli1;
 		this.Stimuli2Image = stimuli2;
 		this.IsImages = true;
+	}
+
+	public TSPieceID(Sprite stimuli1, Sprite stimuli2, bool isHybrid)
+	{
+		this.Stimuli1Image = stimuli1;
+		this.Stimuli2Image = stimuli2;
+		this.IsHybrid = isHybrid;
 	}
 
 }
