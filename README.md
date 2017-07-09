@@ -14,7 +14,8 @@
 
 7.a. If the stimuli is text, write each text option
 
-7.b. If the stimuli is images, write each filename (including file extension e.g. ".png")git
+7.b. If the stimuli is images, write each filename (including file extension e.g. ".png")
+
 8. If any of the stimuli are images, go to the "Manage Files" tab
 9. To upload a new image, scroll down to "Add New File" header
 10. Select each file from your computer's storage
