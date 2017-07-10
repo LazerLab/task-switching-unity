@@ -135,7 +135,13 @@ public class TSDataController : SingletonController<TSDataController>
 					{
 						batches[batchIndex] = new TaskBatch(batchName, processBatch);
 					}
+					// In the Editor the arrays are not full initialized when all batches have been processed
+					// So the post processing callback should run here, to ensure the array has been populated
+					#if UNITY_EDITOR
+
 					postProcessBatch();
+
+					#endif
 				});
 		}
 		randomBatch = UnityEngine.Random.Range(0, STANDARD_BATCH_COUNT);
@@ -151,7 +157,13 @@ public class TSDataController : SingletonController<TSDataController>
 		if(AllBatchesProcessed())
 		{
 			ui.SetLabels(CurrentBatch);
-		
+			#if !UNITY_EDITOR
+
+			// In WebGL, the process batch callback happens after the arrays have been populated
+			// Therefore the hybrid batches should be generated inside this callback
+			generateHybridBatches();
+
+			#endif
 		}
 	}
 
@@ -168,10 +180,6 @@ public class TSDataController : SingletonController<TSDataController>
 		for(int i = STANDARD_BATCH_COUNT; i < batches.Length; i++)
 		{
 			batches[i] = new HybridTaskBatch(randomStandardBatch(), randomStandardBatch());
-		}
-		if(verboseMode)
-		{
-			Debug.Log("Generating Hybrid Batches");
 		}
 	}
 
