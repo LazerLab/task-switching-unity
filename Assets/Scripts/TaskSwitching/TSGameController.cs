@@ -248,7 +248,7 @@ public class TSGameController : SingletonController<TSGameController>
 			}
 			else
 			{
-				task.Stimuli2Index = hybridBatch.GetStimuli2Index(imageSet.Stimuli2Img);
+				task.Stimuli2Index = hybridBatch.GetStimuli2Index(imageSet.Stimuli2);
 			}
 		}
 		else if(set is ImageStimuliSet)
