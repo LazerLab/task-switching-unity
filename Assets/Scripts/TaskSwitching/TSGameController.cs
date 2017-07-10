@@ -218,7 +218,7 @@ public class TSGameController : SingletonController<TSGameController>
 		TSGamePiece piece = choosePieceToSpawn();
 		int pieceIndex = ArrayUtil.IndexOf(boardPieces, piece);
 		this.activeTile = boardTiles[pieceIndex];
-		piece.SetPiece(batch);
+		piece.SetPiece(batch, set);
 		activeTile.SetPiece(piece);
 		this.currentTask = trackTask(set, pieceIndex);
 		return piece;

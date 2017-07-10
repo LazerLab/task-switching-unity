@@ -99,7 +99,7 @@ public class HybridTaskBatch : TaskBatch
 		}
 		else
 		{
-			set.Stimuli1 = sample2.Stimuli2;
+			set.Stimuli2 = sample2.Stimuli2;
 		}
 		return set;
 	}

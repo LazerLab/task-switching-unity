@@ -31,21 +31,19 @@ public class TSGamePiece : TSGameObject
 	[SerializeField]
 	Image stimuli2ImageDisplay;
 
-	public void SetPiece(TaskBatch batch)
+	public void SetPiece(TaskBatch batch, StimuliSet set)
 	{
 		if(batch is HybridTaskBatch)
 		{
-			setPieceHybrid(batch.GetSet() as ImageStimuliSet);
+			setPieceHybrid(set as ImageStimuliSet);
 		}
 		else if(batch is ImageTaskBatch)
 		{
-			ImageTaskBatch images = batch as ImageTaskBatch;
-			ImageStimuliSet set = images.GetSet() as ImageStimuliSet;
-			setPiece(set.Stimuli1Img, set.Stimuli2Img);
+			ImageStimuliSet imgSet = set as ImageStimuliSet;
+			setPiece(imgSet.Stimuli1Img, imgSet.Stimuli2Img);
 		}
 		else
 		{
-			StimuliSet set = batch.GetSet();
 			setPiece(set.Stimuli1, set.Stimuli2);
 		}
 		ToggleVisible(isVisibile:true);

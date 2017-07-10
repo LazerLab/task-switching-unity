@@ -4,7 +4,10 @@
  */
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 using System.Collections;
+
 using k = Global;
 
 public abstract class MonoBehaviourExtended : MonoBehaviour, System.IComparable , ISubscribable
@@ -51,11 +54,6 @@ public abstract class MonoBehaviourExtended : MonoBehaviour, System.IComparable 
 		cleanupReferences();
 		unsubscribeEvents();
 		StopAllCoroutines();
-	}
-
-	void OnLevelWasLoaded(int level) 
-	{
-		handleSceneLoaded(level);
 	}
 
 	void OnApplicationQuit()
@@ -164,6 +162,7 @@ public abstract class MonoBehaviourExtended : MonoBehaviour, System.IComparable 
         {
             DontDestroyOnLoad(gameObject);
         }
+		SceneManager.sceneLoaded += handleSceneLoaded;
 		this.referencesSet = true;
 	}
 
@@ -187,6 +186,7 @@ public abstract class MonoBehaviourExtended : MonoBehaviour, System.IComparable 
 	protected virtual void cleanupReferences() 
 	{
         unsubscribeEvents();
+		SceneManager.sceneLoaded -= handleSceneLoaded;
 	}
 
 	protected virtual void handleNamedEvent(string eventName) 
@@ -198,6 +198,12 @@ public abstract class MonoBehaviourExtended : MonoBehaviour, System.IComparable 
     {
         // NOTHING
     }
+
+	// Overloaded version to reference the scene index
+	void handleSceneLoaded(Scene scene, LoadSceneMode mode)
+	{
+		handleSceneLoaded(scene.buildIndex);
+	}
 
 	protected virtual void handleSceneLoaded(int sceneIndex) 
 	{
