@@ -169,6 +169,10 @@ public class TSDataController : SingletonController<TSDataController>
 		{
 			batches[i] = new HybridTaskBatch(randomStandardBatch(), randomStandardBatch());
 		}
+		if(verboseMode)
+		{
+			Debug.Log("Generating Hybrid Batches");
+		}
 	}
 
 	TaskBatch randomStandardBatch()
