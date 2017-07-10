@@ -28,21 +28,7 @@ public class TSGameController : SingletonController<TSGameController>
 	[SerializeField]
 	int maxPiecesOnBoard = 4;
 
-	[SerializeField]
 	float spawnDelay = 2f;
-
-	[SerializeField]
-	char[] validVowels;
-	[SerializeField]
-	char[] validConsonants;
-
-	char[] validLetters
-	{
-		get
-		{
-			return ArrayUtil.Concat(validVowels, validConsonants);
-		}
-	}
 
     bool hasCurrentTask
     {
@@ -51,19 +37,6 @@ public class TSGameController : SingletonController<TSGameController>
             return currentTask != null;
         }
     }
-
-	[SerializeField]
-	int[] validEvenNumbers;
-	[SerializeField]
-	int[] validOddNumbers;
-
-	int[] validNumbers
-	{
-		get
-		{
-			return ArrayUtil.Concat(validEvenNumbers, validOddNumbers);
-		}
-	}
 
 	[Header("Control Scheme")]
 

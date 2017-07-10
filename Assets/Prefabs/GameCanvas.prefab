@@ -997,11 +997,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preserveOnSceneChange: 0
   maxPiecesOnBoard: 4
-  spawnDelay: 2
-  validVowels: 4100450049005500
-  validConsonants: 47004b004d005200
-  validEvenNumbers: 02000000040000000600000008000000
-  validOddNumbers: 03000000050000000700000009000000
   leftKey: 98
   rightKey: 110
   leftButton: {fileID: 114008453257401262}
