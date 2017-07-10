@@ -1009,7 +1009,7 @@ MonoBehaviour:
   piecePrefab: {fileID: 114917151921109320, guid: 19ee40f4a6c9046cc85499e2d0876126,
     type: 2}
   boardParent: {fileID: 224136598098965506}
-  verboseMode: 1
+  verboseMode: 0
 --- !u!114 &114376187103402710
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1375,9 +1375,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preserveOnSceneChange: 0
-  numTasksPerBatch: 10
   experimentName: Task Switching
-  verboseMode: 1
+  verboseMode: 0
 --- !u!114 &114631851547457314
 MonoBehaviour:
   m_ObjectHideFlags: 1
